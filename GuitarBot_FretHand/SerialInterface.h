@@ -41,7 +41,7 @@ private:
 
 	std::vector<OrderTicket> buffer;
 
-	int tick_us = 2500;
+	const int tick_us = 2500;
 
 	void SerialInterfaceLoop();
 	static void SerialInterfaceLoopStatic(SerialInterface*);
