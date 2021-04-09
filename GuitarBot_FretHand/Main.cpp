@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-	//MIDI_Reader m("Gil's Reggae.mid");
+	//MIDI_Reader m("midis/Gil's Reggae.mid");
 
 	//cout << m.toString();
 
