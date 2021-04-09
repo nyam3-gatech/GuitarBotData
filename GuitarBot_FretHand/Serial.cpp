@@ -1,10 +1,5 @@
 #include "SerialClass.h"
 
-Serial::Serial()
-{
-    this->connected = false;
-}
-
 Serial::Serial(std::string portName)
 {
     //We're not yet connected
@@ -31,7 +26,7 @@ Serial::Serial(std::string portName)
         }
         else
         {
-            printf("ERROR!!!");
+            printf("ERROR!!!\n");
         }
     }
     else
@@ -43,12 +38,12 @@ Serial::Serial(std::string portName)
         if (!GetCommState(this->hSerial, &dcbSerialParams))
         {
             //If impossible, show an error
-            printf("failed to get current serial parameters!");
+            printf("failed to get current serial parameters!\n");
         }
         else
         {
             //Define serial connection parameters for the arduino board
-            dcbSerialParams.BaudRate = CBR_9600;
+            dcbSerialParams.BaudRate = CBR_14400;
             dcbSerialParams.ByteSize = 8;
             dcbSerialParams.StopBits = ONESTOPBIT;
             dcbSerialParams.Parity = NOPARITY;
@@ -59,7 +54,7 @@ Serial::Serial(std::string portName)
             //Set the parameters and check for their proper application
             if (!SetCommState(hSerial, &dcbSerialParams))
             {
-                printf("ALERT: Could not set Serial Port parameters");
+                printf("ALERT: Could not set Serial Port parameters\n");
             }
             else
             {
