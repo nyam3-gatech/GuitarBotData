@@ -15,42 +15,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GuitarEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GuitarTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MIDI_Reader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GuitarTrack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GuitarEvent.cpp">
+    <ClCompile Include="Serial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SerialInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Serial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MIDI_Reader.h">
+    <ClInclude Include="GuitarEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GuitarTrack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GuitarEvent.h">
+    <ClInclude Include="MIDI_Reader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SerialInterface.h">
+    <ClInclude Include="Orders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SerialClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Orders.h">
+    <ClInclude Include="SerialInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

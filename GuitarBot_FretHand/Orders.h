@@ -11,10 +11,8 @@ enum Order {
 	MOVE = 5 // Move the carriage
 };
 
-typedef enum Order Order;
-
 // Returns the number of data bytes associated with the order excluding the order code
-int getNumDataBytes(Order order)
+inline int getNumOrderDataBytes(Order order)
 {
 	switch (order)
 	{

@@ -73,7 +73,7 @@ void SerialInterface::sendOrder(OrderTicket ticket)
 	char charBuffer[5];
 	charBuffer[0] = (int) order;
 
-	int numDataBytes = getNumDataBytes(order);
+	int numDataBytes = getNumOrderDataBytes(order);
 
 	for (int i = 0; i < numDataBytes; i++)
 	{
@@ -81,6 +81,11 @@ void SerialInterface::sendOrder(OrderTicket ticket)
 	}
 
 	(*arduino).WriteData(charBuffer, 1 + numDataBytes);
+}
+
+void SerialInterface::addOrder(OrderTicket order)
+{
+	buffer.push_back(order);
 }
 
 void SerialInterface::startSending()
