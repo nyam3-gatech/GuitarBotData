@@ -27,10 +27,10 @@
     <ClCompile Include="MIDI_Reader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Serial.cpp">
+    <ClCompile Include="SerialInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SerialInterface.cpp">
+    <ClCompile Include="serialib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,10 +47,10 @@
     <ClInclude Include="Orders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SerialClass.h">
+    <ClInclude Include="SerialInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SerialInterface.h">
+    <ClInclude Include="serialib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

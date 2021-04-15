@@ -19,6 +19,7 @@ private:
 	// Track Data
 
 	vector<GuitarEvent*> g_track;
+	vector<TempoEvent*> tempoChanges;
 
 	// Track state to prevent running the sane track at the same time
 
@@ -33,7 +34,7 @@ private:
 	float tempo;
 	unsigned int tempo_us;
 	unsigned int tick;
-	long tick_us;
+	double tick_us;
 
 	void setTempo(float = 120);
 	void setTempoMicroseconds(unsigned int = 500000);
@@ -53,8 +54,6 @@ private:
 	char frets[6]; // Current frets being pressed down
 	char carFret; // Which fret are the servos currently at
 
-	char getServo(char string, char fret);
-
 public:
 
 	GuitarTrack(MIDI_Reader&);
@@ -62,6 +61,10 @@ public:
 	~GuitarTrack();
 
 	void processMIDI(MIDI_Reader&);
+
+	const GuitarEvent* getEvent(int);
+	long long getEventTime(int);
+	long long tick_to_us(int);
 
 	void run();
 	void stop();

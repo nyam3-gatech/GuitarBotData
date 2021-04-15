@@ -32,7 +32,6 @@ GuitarTrack::~GuitarTrack()
 }
 
 // Process MIDI data into playable chord events stored in the guitar track.
-
 void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 {
 	division = m_reader.getDivision();
@@ -88,7 +87,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 					{
 						if (n_ptr->getChannel() == (status & 0x0F))
 						{
-							n_ptr->setDuration(tick - n_ptr->getTick());
+							n_ptr->setEndTick(tick);
 							tempTrack.push_back(n_ptr);
 							tempNotes.erase(tempNotes.begin() + i);
 							break;
@@ -178,28 +177,54 @@ void GuitarTrack::setTempoMicroseconds(unsigned int t_us)
 	tempo_us = t_us;
 }
 
+// Calculates how long each tick is in microseconds
 void GuitarTrack::calcTickTime()
 {
 	tick_us = tempo_us / divTick;
+}
+
+// Returns pointer to a GuitarEvent
+const GuitarEvent* GuitarTrack::getEvent(int index)
+{
+	if (index < 0 || index >= g_track.size()) return 0;
+
+	return g_track[index];
+}
+
+// Returns the time in microseconds when a GuitarEvent executes
+long long GuitarTrack::getEventTime(int index)
+{
+	if (index < 0 || index >= g_track.size()) return -1;
+
+
+}
+
+long long GuitarTrack::tick_to_us(int tick)
+{
+
 }
 
 // Runs a guitar track
 
 void GuitarTrack::run_track()
 {
-	if(state == SETUP) state = RUNNING;
-	for (GuitarEvent* event : g_track)
+	vector<NoteEvent*> noteBuffer;
+	vector<GuitarEvent*>::iterator eventIterator = g_track.begin();
+	GuitarEvent* event = *eventIterator;
+
+	if (state == SETUP) state = RUNNING;
+
+	while (RUNNING)
 	{
-		while (tick < event->getTick() && state == RUNNING);
-
-		if (state != RUNNING) break;
-
-		switch (event->getType())
+		if (event != nullptr && tick >= event->getTick())
 		{
+			switch (event->getType())
+			{
 			case CHORD:
 			{
-				ChordEvent* chordPtr = (ChordEvent*) event;
+				ChordEvent* chordPtr = (ChordEvent*)event;
 
+				
 				if (chordPtr->getLowestFret() < carFret)
 				{
 					arduinoInterface->addOrder(OrderTicket(0, MOVE, carFret - chordPtr->getLowestFret()));
@@ -212,7 +237,8 @@ void GuitarTrack::run_track()
 				for (NoteEvent note : chordPtr->getNotes())
 				{
 					unsigned char pin = ((note.getFret() - carFret) * 6) + note.getGuitarString() + 1;
-					arduinoInterface->addOrder(OrderTicket(40, ON, pin));
+					arduinoInterface->addOrder(OrderTicket(400, ON, pin));
+					noteBuffer.push_back(&note);
 				}
 				break;
 			}
@@ -222,12 +248,41 @@ void GuitarTrack::run_track()
 
 				break;
 			}
+			}
+
+			//cout << event->toString();
+
+			eventIterator++;
+			if (eventIterator == g_track.end())
+			{
+				event = nullptr;
+			}
+			else
+			{
+				event = *eventIterator;
+			}
 		}
 
-		cout << event->toString();
-	}
+		for (int i = 0; i < noteBuffer.size();)
+		{
+			NoteEvent note = *(noteBuffer[i]);
+			if (tick >= noteBuffer[i]->getEndTick())
+			{
+				unsigned char pin = ((note.getFret() - carFret) * 6) + note.getGuitarString() + 1;
+				//arduinoInterface->addOrder(OrderTicket(0, OFF, pin));
+				noteBuffer.erase(noteBuffer.begin() + i);
+			}
+			else
+			{
+				i++;
+			}
+		}
 
-	state = STOP;
+		if (event == nullptr && (noteBuffer.size() == 0))
+		{
+			state = STOP;
+		}
+	}
 }
 
 void GuitarTrack::run_track_static(GuitarTrack* track)
@@ -274,8 +329,12 @@ void GuitarTrack::stop()
 	if(state != READY) state = STOP;
 }
 
-// Creates a string representation of the track
+void GuitarTrack::addSerialInterface(SerialInterface* serialInterface)
+{
+	arduinoInterface = serialInterface;
+}
 
+// Creates a string representation of the track
 string GuitarTrack::toString()
 {
 	string str;

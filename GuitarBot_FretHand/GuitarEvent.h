@@ -59,7 +59,7 @@ class NoteEvent : public GuitarEvent
 private:
 
 	int channel;
-	int duration;
+	int endTick;
 	int note;
 	int velocity;
 	char g_string;
@@ -72,11 +72,13 @@ public:
 
 	int getChannel();
 	int getDuration();
+	int getEndTick();
 	int getNote();
 	char getGuitarString();
 	char getFret();
 
 	void setDuration(int);
+	void setEndTick(int t);
 	void setGuitarString(int);
 	void setFret(unsigned char*);
 

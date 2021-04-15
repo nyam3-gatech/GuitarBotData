@@ -1,3 +1,8 @@
+/*
+ * Header file for a Serial object that can be used to send data to an Arduino from Windows
+ * Code copied and adapted from https://playground.arduino.cc/Interfacing/CPPWindows/
+ */
+
 #ifndef SERIALCLASS_H_INCLUDED
 #define SERIALCLASS_H_INCLUDED
 

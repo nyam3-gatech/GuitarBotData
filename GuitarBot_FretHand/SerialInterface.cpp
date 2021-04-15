@@ -1,9 +1,12 @@
 #include "SerialInterface.h"
 #include <chrono>
 
+#define ARD_BAUD 14400
+
 SerialInterface::SerialInterface(std::string port)
 {
-	arduino = new Serial(port);
+	connected = false;
+	if (arduino.openDevice(port.c_str(), ARD_BAUD) == 1) connected = true;
 
 	sending = false;
 	running = true;
@@ -14,9 +17,10 @@ SerialInterface::SerialInterface(std::string port)
 
 SerialInterface::~SerialInterface()
 {
+	connected = false;
 	sending = false;
 	running = false;
-	delete arduino;
+	arduino.closeDevice();
 }
 
 void SerialInterface::SerialInterfaceLoop()
@@ -80,7 +84,7 @@ void SerialInterface::sendOrder(OrderTicket ticket)
 		charBuffer[i + 1] = ticket.getDataByte(i);
 	}
 
-	(*arduino).WriteData(charBuffer, 1 + numDataBytes);
+	arduino.writeBytes(charBuffer, 1 + numDataBytes);
 }
 
 void SerialInterface::addOrder(OrderTicket order)
@@ -99,7 +103,7 @@ void SerialInterface::stopSending()
 
 bool SerialInterface::isConnected()
 {
-	return (*arduino).IsConnected();
+	return connected;
 }
 bool SerialInterface::isSending()
 {

@@ -49,7 +49,7 @@ NoteEvent::NoteEvent(int tick_, int channel_, int note_, int velocity_) : Guitar
 	channel = channel_;
 	note = note_;
 	velocity = velocity_;
-	duration = 0;
+	endTick = 0;
 	g_string = 0;
 	fret = -1;
 }
@@ -62,7 +62,11 @@ int NoteEvent::getChannel()
 }
 int NoteEvent::getDuration()
 {
-	return duration;
+	return endTick - tick;
+}
+int NoteEvent::getEndTick()
+{
+	return endTick;
 }
 int NoteEvent::getNote()
 {
@@ -79,7 +83,11 @@ char NoteEvent::getFret()
 
 void NoteEvent::setDuration(int d)
 {
-	duration = d;
+	endTick = tick + d;
+}
+void NoteEvent::setEndTick(int t)
+{
+	endTick = t;
 }
 void NoteEvent::setGuitarString(int s)
 {
@@ -107,7 +115,7 @@ vector<char> NoteEvent::getPossibleFrets(unsigned char* tuning)
 
 string NoteEvent::toString()
 {
-	string str = "<note :: tick = " + to_string(tick) + ", duration = " + to_string(duration);
+	string str = "<note :: tick = " + to_string(tick) + ", duration = " + to_string(getDuration());
 	str += ", channel = " + to_string(channel) + ", note = " + to_string(note) + ", velocity = " + to_string(velocity);
 	str += ", string = " + to_string(g_string) + ", fret = " + to_string(fret) + ">";
 	return str;
@@ -281,6 +289,7 @@ char ChordEvent::calculateFitness(vector<char> frets)
 	return 120 - sum;
 }
 
+// Fixes duration of duplicate notes when the same note should be played twice in the same chord
 void ChordEvent::fixDuplicates()
 {
 	int duplicateIndex = -1;
@@ -296,7 +305,7 @@ void ChordEvent::fixDuplicates()
 			if (i == duplicateIndex) continue;
 			if (notes[i].getNote() == notes[duplicateIndex].getNote())
 			{
-				notes[duplicateIndex].setDuration(notes[i].getDuration());
+				notes[duplicateIndex].setEndTick(notes[i].getEndTick());
 				break;
 			}
 		}
