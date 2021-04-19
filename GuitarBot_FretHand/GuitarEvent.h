@@ -95,6 +95,13 @@ private:
 	bool playable;
 	std::vector<NoteEvent> notes;
 
+#define PICK 0
+#define STRUM 1
+#define UP 0
+#define DOWN 1
+
+	char direction;
+
 	char calculateFitness(std::vector<char>);
 	std::vector<char> getBestFit(char, std::vector<char>, std::vector<std::vector<char>>);
 
@@ -124,6 +131,12 @@ public:
 
 	int checkForNote(int);
 	bool removeNote(int);
+
+	void setDirection(char);
+
+	char getTechnique();
+	char getDirection();
+
 
 	std::vector<NoteEvent>& getNotes();
 

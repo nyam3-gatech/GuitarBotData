@@ -3,6 +3,7 @@
 #include <chrono>
 #include <mutex>
 #include <thread>
+#include <cmath>
 
 #include <iostream>
 
@@ -41,6 +42,8 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 
 	vector<GuitarEvent*> tempNotes; // holds NoteEvents without a duration
 	vector<GuitarEvent*> tempTrack;
+
+	int minimumDuration = INT_MAX;
 
 	for (Track_Chunk m_track : m_reader.getTracks())
 	{
@@ -88,6 +91,10 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						if (n_ptr->getChannel() == (status & 0x0F))
 						{
 							n_ptr->setEndTick(tick);
+							if (n_ptr->getDuration() != 0 && n_ptr->getDuration() < minimumDuration)
+							{
+								minimumDuration = n_ptr->getDuration();
+							}
 							tempTrack.push_back(n_ptr);
 							tempNotes.erase(tempNotes.begin() + i);
 							break;
@@ -105,6 +112,9 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 		}
 	}
 
+	int exponent = round(log2((1.0 * minimumDuration) / divTick));
+	int updown_beat_tick = 2 * round(divTick * pow(2, exponent));
+
 	ChordEvent* chord_ptr = 0;
 
 	for (unsigned int i = 0; i < tempTrack.size(); i++)
@@ -121,6 +131,14 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 					{
 						chord_ptr->setFrets(tuning);
 						chord_ptr->fixDuplicates();
+						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
+						{
+							chord_ptr->setDirection(UP);
+						}
+						else
+						{
+							chord_ptr->setDirection(DOWN);
+						}
 						chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 						g_track.push_back(chord_ptr);
 					}
@@ -135,6 +153,17 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 					// create a new ChordEvent and add it to the track
 					chord_ptr->setFrets(tuning);
 					chord_ptr->fixDuplicates();
+					if (chord_ptr->getTechnique() == STRUM)
+					{
+						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
+						{
+							chord_ptr->setDirection(UP);
+						}
+						else
+						{
+							chord_ptr->setDirection(DOWN);
+						}
+					}
 					chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 					g_track.push_back(chord_ptr);
 				}
@@ -157,10 +186,71 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			delete ptr;
 		}
 	}
-
+	
 	// Set the frets for the last chord
-	chord_ptr->setFrets(tuning);
-	chord_ptr->fixDuplicates();
+	if (chord_ptr)
+	{
+		chord_ptr->setFrets(tuning);
+		chord_ptr->fixDuplicates();
+		if (chord_ptr->getTechnique() == STRUM)
+		{
+			if ((chord_ptr->getTick() / updown_beat_tick) % 2)
+			{
+				chord_ptr->setDirection(UP);
+			}
+			else
+			{
+				chord_ptr->setDirection(DOWN);
+			}
+		}
+	}
+
+	ChordEvent* last = 0;
+	ChordEvent* current = 0;
+	ChordEvent* next = 0;
+
+	for (int i = 0; i < g_track.size();)
+	{
+		while (!current)
+		{
+			if (g_track[i]->getType() == CHORD) current = (ChordEvent*) g_track[i];
+			i++;
+		}
+		while (!next && i < g_track.size())
+		{
+			if (g_track[i]->getType() == CHORD) next = (ChordEvent*) g_track[i];
+			i++;
+		}
+
+		if (current->getTechnique() == PICK)
+		{
+			if (next && next->getTechnique() == PICK)
+			{
+				int difference = next->getNotes()[0].getNote() - current->getNotes()[0].getNote();
+
+				if (difference > 0)
+				{
+					current->setDirection(UP);
+				}
+				else if (difference < 0)
+				{
+					current->setDirection(DOWN);
+				}
+			}
+			else if (last && last->getTechnique() == PICK)
+			{
+				current->setDirection(last->getDirection() == DOWN ? UP : DOWN);
+			}
+			else
+			{
+				current->setDirection(DOWN);
+			}
+		}
+
+		last = current;
+		current = next;
+		next = 0;
+	}
 }
 
 // Set functions for tempo
@@ -196,12 +286,12 @@ long long GuitarTrack::getEventTime(int index)
 {
 	if (index < 0 || index >= g_track.size()) return -1;
 
-
+	return 0; // PLACEHOLDER
 }
 
 long long GuitarTrack::tick_to_us(int tick)
 {
-
+	return 0; // PLACEHOLDER
 }
 
 // Runs a guitar track

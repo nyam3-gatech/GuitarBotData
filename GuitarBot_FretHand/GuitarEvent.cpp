@@ -42,8 +42,6 @@ string TempoEvent::toString()
 	return "Placeholder\n";
 }
 
-
-
 NoteEvent::NoteEvent(int tick_, int channel_, int note_, int velocity_) : GuitarEvent(tick_, NOTE)
 {
 	channel = channel_;
@@ -358,13 +356,32 @@ char ChordEvent::extractFret(unsigned char gStrFret)
 	return gStrFret & 0x1F;
 }
 
+void ChordEvent::setDirection(char d)
+{
+	direction = d;
+}
+
+char ChordEvent::getTechnique()
+{
+	if (notes.size() == 1) return PICK;
+	return STRUM;
+}
+char ChordEvent::getDirection()
+{
+	return direction;
+}
+
 string ChordEvent::toString()
 {
-	string str = "chord :: tick = " + to_string(tick) + "\n";
+	string str = "chord :: tick = " + to_string(tick) + ", technique = " + (getTechnique() == STRUM ? "strum" : "pick");
+	str += ", direction = " + (string) (direction == UP ? "up" : "down") + "\n";
+	
 	if (!playable) str += "   <NOT PLAYABLE - range restriction>\n";
+	
 	for (NoteEvent n : notes)
 	{
 		str += "   " + n.toString() + "\n";
 	}
 	return str;
+	
 }
