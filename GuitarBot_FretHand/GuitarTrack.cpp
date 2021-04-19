@@ -129,8 +129,10 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 				{
 					if (chord_ptr->getNotes().size() >= 6)
 					{
+						// Set the strings and frets
 						chord_ptr->setFrets(tuning);
 						chord_ptr->fixDuplicates();
+						// If the chord has multiple notes, set the strumming direction based on which beat it is on
 						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
 						{
 							chord_ptr->setDirection(UP);
@@ -139,6 +141,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						{
 							chord_ptr->setDirection(DOWN);
 						}
+						// create a new ChordEvent and add it to the track
 						chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 						g_track.push_back(chord_ptr);
 					}
@@ -150,9 +153,10 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 				}
 				else
 				{
-					// create a new ChordEvent and add it to the track
+					// Set the strings and frets
 					chord_ptr->setFrets(tuning);
 					chord_ptr->fixDuplicates();
+					// If the chord has multiple notes, set the strumming direction based on which beat it is on
 					if (chord_ptr->getTechnique() == STRUM)
 					{
 						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
@@ -164,6 +168,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 							chord_ptr->setDirection(DOWN);
 						}
 					}
+					// create a new ChordEvent and add it to the track
 					chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 					g_track.push_back(chord_ptr);
 				}
@@ -187,11 +192,13 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 		}
 	}
 	
-	// Set the frets for the last chord
+	// Last Chord
 	if (chord_ptr)
 	{
+		// Set the strings and frets
 		chord_ptr->setFrets(tuning);
 		chord_ptr->fixDuplicates();
+		// If the chord has multiple notes, set the strumming direction based on which beat it is on
 		if (chord_ptr->getTechnique() == STRUM)
 		{
 			if ((chord_ptr->getTick() / updown_beat_tick) % 2)
@@ -204,6 +211,8 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			}
 		}
 	}
+
+	// Set the picking direction for picked notes
 
 	ChordEvent* last = 0;
 	ChordEvent* current = 0;
@@ -222,24 +231,16 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			i++;
 		}
 
+		// Check if the chord is just a single picked note
 		if (current->getTechnique() == PICK)
 		{
-			if (next && next->getTechnique() == PICK)
+			// Check conditions for when picking direction should be up
+			if (
+				(next && next->getTechnique() == PICK && (next->getNotes()[0].getGuitarString() - current->getNotes()[0].getGuitarString() > 0))
+				|| (last && last->getTechnique() == PICK && last->getDirection() == DOWN)
+				)
 			{
-				int difference = next->getNotes()[0].getNote() - current->getNotes()[0].getNote();
-
-				if (difference > 0)
-				{
-					current->setDirection(UP);
-				}
-				else if (difference < 0)
-				{
-					current->setDirection(DOWN);
-				}
-			}
-			else if (last && last->getTechnique() == PICK)
-			{
-				current->setDirection(last->getDirection() == DOWN ? UP : DOWN);
+				current->setDirection(UP);
 			}
 			else
 			{
