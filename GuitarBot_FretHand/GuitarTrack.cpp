@@ -141,6 +141,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						{
 							chord_ptr->setDirection(DOWN);
 						}
+						chord_ptr->setContactStrings();
 						// create a new ChordEvent and add it to the track
 						chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 						g_track.push_back(chord_ptr);
@@ -167,6 +168,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						{
 							chord_ptr->setDirection(DOWN);
 						}
+						chord_ptr->setContactStrings();
 					}
 					// create a new ChordEvent and add it to the track
 					chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
@@ -209,6 +211,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			{
 				chord_ptr->setDirection(DOWN);
 			}
+			chord_ptr->setContactStrings();
 		}
 	}
 
@@ -235,9 +238,11 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 		if (current->getTechnique() == PICK)
 		{
 			// Check conditions for when picking direction should be up
-			if (
-				(next && next->getTechnique() == PICK && (next->getNotes()[0].getGuitarString() - current->getNotes()[0].getGuitarString() > 0))
-				|| (last && last->getTechnique() == PICK && last->getDirection() == DOWN)
+			if	((next && (next->getTechnique() == PICK)) ?
+					((next->getNotes()[0].getGuitarString() > current->getNotes()[0].getGuitarString())
+					|| ((next->getNotes()[0].getGuitarString() == current->getNotes()[0].getGuitarString()) 
+						&& last && last->getTechnique() == PICK && last->getDirection() == DOWN))
+					: (last && last->getTechnique() == PICK && last->getDirection() == DOWN)
 				)
 			{
 				current->setDirection(UP);
@@ -246,6 +251,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			{
 				current->setDirection(DOWN);
 			}
+			current->setContactStrings();
 		}
 
 		last = current;

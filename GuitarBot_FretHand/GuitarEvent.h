@@ -102,6 +102,9 @@ private:
 
 	char direction;
 
+	char contact_string;
+	char final_contact_string;
+
 	char calculateFitness(std::vector<char>);
 	std::vector<char> getBestFit(char, std::vector<char>, std::vector<std::vector<char>>);
 
@@ -137,6 +140,25 @@ public:
 	char getTechnique();
 	char getDirection();
 
+	char getHighestString();
+	char getLowestString();
+
+	void setContactStrings();
+
+	char getContactString();
+	char getFinalContactString();
+
+#define PD_P 0.5
+#define PD_E 0.5
+#define PU_P 0.5
+#define PU_E 0.5
+#define SD_P 1
+#define SD_E 1
+#define SU_P 1
+#define SU_E 1
+
+	float getPreparePosition();
+	float getFinalPosition();
 
 	std::vector<NoteEvent>& getNotes();
 

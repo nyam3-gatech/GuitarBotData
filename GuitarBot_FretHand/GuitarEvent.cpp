@@ -23,7 +23,7 @@ char GuitarEvent::getType() const
 	return type;
 }
 
-
+// TempoEvent
 
 TempoEvent::TempoEvent(int tick_, int tempo_us_) : GuitarEvent(tick_, TEMPO)
 {
@@ -41,6 +41,8 @@ string TempoEvent::toString()
 {
 	return "Placeholder\n";
 }
+
+// NoteEvent
 
 NoteEvent::NoteEvent(int tick_, int channel_, int note_, int velocity_) : GuitarEvent(tick_, NOTE)
 {
@@ -119,7 +121,7 @@ string NoteEvent::toString()
 	return str;
 }
 
-
+// ChordEvent
 
 ChordEvent::ChordEvent(int tick_, NoteEvent n) : GuitarEvent(tick_, CHORD)
 {
@@ -371,11 +373,75 @@ char ChordEvent::getDirection()
 	return direction;
 }
 
+char ChordEvent::getHighestString()
+{
+	char highest = 0;
+	for (NoteEvent note : notes)
+	{
+		if (note.getGuitarString() > highest) highest = note.getGuitarString();
+	}
+	return highest;
+}
+char ChordEvent::getLowestString()
+{
+	char lowest = 7;
+	for (NoteEvent note : notes)
+	{
+		if (note.getGuitarString() < lowest) lowest = note.getGuitarString();
+	}
+	return lowest;
+}
+
+void ChordEvent::setContactStrings()
+{
+	if (getDirection() == DOWN)
+	{
+		contact_string = getLowestString();
+		final_contact_string = getHighestString();
+	}
+	else
+	{
+		contact_string = getHighestString();
+		final_contact_string = getLowestString();
+	}
+}
+
+char ChordEvent::getContactString()
+{
+	return contact_string;
+}
+char ChordEvent::getFinalContactString()
+{
+	return final_contact_string;
+}
+float ChordEvent::getPreparePosition()
+{
+	if (getTechnique() == PICK)
+	{
+		return contact_string + ((getDirection() == DOWN) ? PD_P : -PU_P);
+	}
+	else
+	{
+		return contact_string + ((getDirection() == DOWN) ? SD_P : -SU_P);
+	}
+}
+float ChordEvent::getFinalPosition()
+{
+	if (getTechnique() == PICK)
+	{
+		return final_contact_string + ((getDirection() == DOWN) ? -PD_E : PU_E);
+	}
+	else
+	{
+		return final_contact_string + ((getDirection() == DOWN) ? -SD_E : SU_E);
+	}
+}
+
 string ChordEvent::toString()
 {
 	string str = "chord :: tick = " + to_string(tick) + ", technique = " + (getTechnique() == STRUM ? "strum" : "pick");
-	str += ", direction = " + (string) (direction == UP ? "up" : "down") + "\n";
-	
+	str += ", direction = " + (string) (direction == UP ? "up" : "down");
+	str += ", cs = " + to_string(contact_string) + ", fcs = " + to_string(final_contact_string) + "\n";
 	if (!playable) str += "   <NOT PLAYABLE - range restriction>\n";
 	
 	for (NoteEvent n : notes)
