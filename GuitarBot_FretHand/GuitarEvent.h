@@ -30,6 +30,8 @@ public:
 	GuitarEvent(int, char);
 	virtual ~GuitarEvent();
 
+	void setTick(int);
+
 	int getTick() const;
 	char getType() const;
 
@@ -80,6 +82,7 @@ public:
 	void setDuration(int);
 	void setEndTick(int t);
 	void setGuitarString(int);
+	void setFret(char);
 	void setFret(unsigned char*);
 
 	std::vector<char> getPossibleFrets(unsigned char*);
@@ -127,8 +130,10 @@ public:
 	void sortByTime();
 
 	void setFrets(unsigned char*);
-
 	void fixDuplicates();
+
+	void setPlayable(bool = 1);
+	bool isPlayable();
 
 	bool checkConflict(unsigned char*);
 
@@ -161,6 +166,8 @@ public:
 	float getFinalPosition();
 
 	std::vector<NoteEvent>& getNotes();
+	unsigned char getNumNotes();
+	uint64_t notesToLong();
 
 	std::string toString();
 };

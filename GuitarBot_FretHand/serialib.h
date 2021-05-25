@@ -21,7 +21,7 @@ This is a licence-free software, it can be used by anyone who try to build a bet
 
 // Include for windows
 #if defined (_WIN32) || defined (_WIN64)
-    // Accessing to the serial port under Windows
+// Accessing to the serial port under Windows
 #include <windows.h>
 
 #endif

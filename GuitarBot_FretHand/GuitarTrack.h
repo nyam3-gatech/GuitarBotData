@@ -3,6 +3,7 @@
 
 #include "MIDI_Reader.h"
 #include "GuitarEvent.h"
+#include "GTab.h"
 #include "SerialInterface.h"
 
 class GuitarTrack
@@ -20,6 +21,10 @@ private:
 
 	vector<GuitarEvent*> g_track;
 	vector<TempoEvent*> tempoChanges;
+
+	// GTab - Used to calculate strings and frets to use
+
+	GTab gtab;
 
 	// Track state to prevent running the sane track at the same time
 

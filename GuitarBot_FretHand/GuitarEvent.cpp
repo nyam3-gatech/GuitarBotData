@@ -13,6 +13,11 @@ GuitarEvent::GuitarEvent(int tick_, char type_)
 
 GuitarEvent::~GuitarEvent() {}
 
+void GuitarEvent::setTick(int t)
+{
+	tick = t;
+}
+
 int GuitarEvent::getTick() const
 {
 	return tick;
@@ -92,6 +97,10 @@ void NoteEvent::setEndTick(int t)
 void NoteEvent::setGuitarString(int s)
 {
 	g_string = s;
+}
+void NoteEvent::setFret(char fret_)
+{
+	fret = fret_;
 }
 void NoteEvent::setFret(unsigned char* tuning)
 {
@@ -312,6 +321,16 @@ void ChordEvent::fixDuplicates()
 	}
 }
 
+void ChordEvent::setPlayable(bool p)
+{
+	playable = p;
+}
+
+bool ChordEvent::isPlayable()
+{
+	return playable;
+}
+
 bool ChordEvent::checkConflict(unsigned char* tuning)
 {
 	for (NoteEvent n : notes)
@@ -343,6 +362,23 @@ bool ChordEvent::removeNote(int n)
 vector<NoteEvent>& ChordEvent::getNotes()
 {
 	return notes;
+}
+
+unsigned char ChordEvent::getNumNotes()
+{
+	return notes.size();
+}
+
+uint64_t ChordEvent::notesToLong()
+{
+	sortByPitch();
+	uint64_t pitches = 0;
+	for (NoteEvent& note : notes)
+	{
+		pitches <<= 8;
+		pitches += note.getNote();
+	}
+	return pitches;
 }
 
 char ChordEvent::condenseStringFret(char g_string, char fret)
@@ -439,7 +475,7 @@ float ChordEvent::getFinalPosition()
 
 string ChordEvent::toString()
 {
-	string str = "chord :: tick = " + to_string(tick) + ", technique = " + (getTechnique() == STRUM ? "strum" : "pick");
+	string str = "chord :: tick = " + to_string(tick) + ", m = " + to_string((tick/1920) + 1) + ", technique = " + (getTechnique() == STRUM ? "strum" : "pick");
 	str += ", direction = " + (string) (direction == UP ? "up" : "down");
 	str += ", cs = " + to_string(contact_string) + ", fcs = " + to_string(final_contact_string) + "\n";
 	if (!playable) str += "   <NOT PLAYABLE - range restriction>\n";
@@ -449,5 +485,4 @@ string ChordEvent::toString()
 		str += "   " + n.toString() + "\n";
 	}
 	return str;
-	
 }

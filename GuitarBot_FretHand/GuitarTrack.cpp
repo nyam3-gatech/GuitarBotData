@@ -16,6 +16,8 @@ GuitarTrack::GuitarTrack(MIDI_Reader& m)
 	tuning[4] = 59; // B
 	tuning[5] = 64; // E
 
+	gtab = GTab(tuning);
+
 	processMIDI(m);
 
 	setTempo(120);
@@ -129,9 +131,11 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 				{
 					if (chord_ptr->getNotes().size() >= 6)
 					{
+						/*
 						// Set the strings and frets
 						chord_ptr->setFrets(tuning);
 						chord_ptr->fixDuplicates();
+						*/
 						// If the chord has multiple notes, set the strumming direction based on which beat it is on
 						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
 						{
@@ -141,13 +145,15 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						{
 							chord_ptr->setDirection(DOWN);
 						}
-						chord_ptr->setContactStrings();
+						//chord_ptr->setContactStrings();
+
 						// create a new ChordEvent and add it to the track
 						chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 						g_track.push_back(chord_ptr);
 					}
 					else
 					{
+						if (n_ptr->getTick() < chord_ptr->getTick()) chord_ptr->setTick(n_ptr->getTick());
 						chord_ptr->addNote(*n_ptr); // add the note to the chord
 						continue;
 					}
@@ -155,8 +161,10 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 				else
 				{
 					// Set the strings and frets
+					/*
 					chord_ptr->setFrets(tuning);
 					chord_ptr->fixDuplicates();
+					*/
 					// If the chord has multiple notes, set the strumming direction based on which beat it is on
 					if (chord_ptr->getTechnique() == STRUM)
 					{
@@ -168,8 +176,9 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						{
 							chord_ptr->setDirection(DOWN);
 						}
-						chord_ptr->setContactStrings();
+						//chord_ptr->setContactStrings();
 					}
+					
 					// create a new ChordEvent and add it to the track
 					chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 					g_track.push_back(chord_ptr);
@@ -194,12 +203,16 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 		}
 	}
 	
+	gtab.setFrets(g_track);
+
 	// Last Chord
 	if (chord_ptr)
 	{
+		/*
 		// Set the strings and frets
 		chord_ptr->setFrets(tuning);
 		chord_ptr->fixDuplicates();
+		*/
 		// If the chord has multiple notes, set the strumming direction based on which beat it is on
 		if (chord_ptr->getTechnique() == STRUM)
 		{
@@ -251,6 +264,10 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			{
 				current->setDirection(DOWN);
 			}
+			current->setContactStrings();
+		}
+		else
+		{
 			current->setContactStrings();
 		}
 
