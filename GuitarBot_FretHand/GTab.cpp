@@ -31,17 +31,17 @@ Fingering& Fingering::operator=(const Fingering& f)
 	return *this;
 }
 
-void Fingering::assignFingering(ChordEvent& chord)
+void Fingering::assignFingering(ChordEvent* chord)
 {
-	chord.sortByPitch();
+	chord->sortByPitch();
 
-	for (int i = 0; i < chord.getNumNotes(); i++)
+	for (int i = 0; i < chord->getNumNotes(); i++)
 	{
-		chord.getNotes()[i].setGuitarString(strings[i]);
-		chord.getNotes()[i].setFret(frets[i]);
+		chord->getNotes()[i].setGuitarString(strings[i]);
+		chord->getNotes()[i].setFret(frets[i]);
 	}
 
-	chord.setPlayable();
+	chord->setPlayable();
 }
 
 ChordFingerings::ChordFingerings(uint64_t notes_, vector<Fingering>& fingerings_)
@@ -203,7 +203,7 @@ void GTab::searchAllFingerings(vector<vector<char>>& possibleFrets, char n, Fing
 	}
 }
 
-int16_t GTab::getIntraFitness(Fingering& f)
+int GTab::getIntraFitness(Fingering& f)
 {
 	int fitness = 500; // base fitness
 
@@ -252,7 +252,7 @@ int16_t GTab::getIntraFitness(Fingering& f)
 
 	return fitness;
 }
-int16_t GTab::getInterFitness(Fingering& f1, Fingering& f2)
+int GTab::getInterFitness(Fingering& f1, Fingering& f2)
 {
 	return 0;
 }
@@ -299,7 +299,7 @@ void GTab::setFrets(vector<GuitarEvent*>& track)
 				{
 					GTabNode& prior = fingeringGraph[priorIndex][j];
 
-					int16_t tempScore = prior.score + getInterFitness(*prior.f, f);
+					int tempScore = prior.score + getInterFitness(*prior.f, f);
 
 					if (tempScore > node.score)
 					{
@@ -332,7 +332,7 @@ void GTab::setFrets(vector<GuitarEvent*>& track)
 
 	while (nodeptr)
 	{
-		(nodeptr->f)->assignFingering(*(nodeptr->chord));
+		(nodeptr->f)->assignFingering(nodeptr->chord);
 		nodeptr = nodeptr->previous;
 	}
 }

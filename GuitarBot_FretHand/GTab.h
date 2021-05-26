@@ -13,7 +13,7 @@ class Fingering
 private:
 	char strings[6];
 	char frets[6];
-	int16_t intrafit;
+	int intrafit;
 
 	friend class ChordFingerings; // Allows ChordFingerings to access private variables
 	friend class GTab; // Allows GTab to access private variables
@@ -23,7 +23,7 @@ public:
 	Fingering(const Fingering&);
 	Fingering& operator=(const Fingering&);
 
-	void assignFingering(ChordEvent&);
+	void assignFingering(ChordEvent*);
 };
 
 class ChordFingerings
@@ -48,7 +48,7 @@ private:
 	GTabNode* previous;
 	Fingering* f;
 	ChordEvent* chord;
-	int16_t score;
+	int score;
 
 	friend class GTab;
 
@@ -70,8 +70,8 @@ private:
 	void searchFingerings(vector<vector<char>>&, char, Fingering&, vector<Fingering>&);
 	void searchAllFingerings(vector<vector<char>>&, char, Fingering&, vector<Fingering>&);
 
-	int16_t getIntraFitness(Fingering&);
-	int16_t getInterFitness(Fingering&, Fingering&);
+	int getIntraFitness(Fingering&);
+	int getInterFitness(Fingering&, Fingering&);
 
 public:
 
