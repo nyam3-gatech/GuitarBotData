@@ -12,17 +12,15 @@ int main()
 
 	GuitarTrack gTrack(m);
 
-	/* EXAMPLE - Accessing Chord Data
-	
+	cout << gTrack.toString();
+
+	// EXAMPLE - Accessing Chord Data
+
 	vector<ChordEvent*>& chords = gTrack.getChords();
 
 	chords[0]->getTick();
 	chords[0]->getDirection();
 	chords[0]->getTechnique();
-
-	*/
-
-	cout << gTrack.toString();
 	
 	//string port = ""; // NEED TO ADD COM PORT
 
