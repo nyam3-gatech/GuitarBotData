@@ -383,7 +383,7 @@ void GuitarTrack::run_track()
 			if (tick >= noteBuffer[i]->getEndTick())
 			{
 				unsigned char pin = ((note.getFret() - carFret) * 6) + note.getGuitarString() + 1;
-				//arduinoInterface->addOrder(OrderTicket(0, OFF, pin));
+				arduinoInterface->addOrder(OrderTicket(0, OFF, pin));
 				noteBuffer.erase(noteBuffer.begin() + i);
 			}
 			else
