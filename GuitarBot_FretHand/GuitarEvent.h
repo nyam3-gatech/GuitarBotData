@@ -108,9 +108,6 @@ private:
 	char contact_string;
 	char final_contact_string;
 
-	char calculateFitness(std::vector<char>);
-	std::vector<char> getBestFit(char, std::vector<char>, std::vector<std::vector<char>>);
-
 	char condenseStringFret(char, char);
 	char extractString(unsigned char);
 	char extractFret(unsigned char);
@@ -129,7 +126,6 @@ public:
 	void sortByPitch();
 	void sortByTime();
 
-	void setFrets(unsigned char*);
 	void fixDuplicates();
 
 	void setPlayable(bool = 1);

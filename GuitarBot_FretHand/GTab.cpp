@@ -257,18 +257,14 @@ int GTab::getInterFitness(Fingering& f1, Fingering& f2)
 	return 0;
 }
 
-void GTab::setFrets(vector<GuitarEvent*>& track)
+void GTab::setFrets(vector<ChordEvent*>& chords)
 {
 	vector<vector<GTabNode>> fingeringGraph;
 	int graphIndex = 0;
 
-	for (int i = 0; i < track.size(); i++)
+	for (int i = 0; i < chords.size(); i++)
 	{
-		GuitarEvent* gEvent = track[i];
-
-		if (gEvent->getType() != CHORD) continue;
-
-		ChordEvent* chord = (ChordEvent*) gEvent;
+		ChordEvent* chord = chords[i];
 
 		ChordFingerings& chordFingerings = getPossibleFingerings(*chord);
 

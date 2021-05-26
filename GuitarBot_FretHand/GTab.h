@@ -78,7 +78,7 @@ public:
 	GTab();
 	GTab(unsigned char*);
 	
-	void setFrets(vector<GuitarEvent*>&);
+	void setFrets(vector<ChordEvent*>&);
 };
 
 #endif

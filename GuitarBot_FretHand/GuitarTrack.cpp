@@ -150,6 +150,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						// create a new ChordEvent and add it to the track
 						chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 						g_track.push_back(chord_ptr);
+						chordEvents.push_back(chord_ptr);
 					}
 					else
 					{
@@ -182,6 +183,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 					// create a new ChordEvent and add it to the track
 					chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 					g_track.push_back(chord_ptr);
+					chordEvents.push_back(chord_ptr);
 				}
 			}
 			else
@@ -189,6 +191,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 				// create a new ChordEvent and add it to the track
 				chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 				g_track.push_back(chord_ptr);
+				chordEvents.push_back(chord_ptr);
 			}
 
 			delete ptr;
@@ -196,6 +199,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 		else if (ptr->getType() == TEMPO)
 		{
 			g_track.push_back(ptr);
+			tempoChanges.push_back((TempoEvent*) ptr);
 		}
 		else
 		{
@@ -203,7 +207,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 		}
 	}
 	
-	gtab.setFrets(g_track);
+	gtab.setFrets(chordEvents);
 
 	// Last Chord
 	if (chord_ptr)
@@ -234,16 +238,16 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 	ChordEvent* current = 0;
 	ChordEvent* next = 0;
 
-	for (int i = 0; i < g_track.size();)
+	for (int i = 0; i < chordEvents.size();)
 	{
 		while (!current)
 		{
-			if (g_track[i]->getType() == CHORD) current = (ChordEvent*) g_track[i];
+			current = chordEvents[i];
 			i++;
 		}
-		while (!next && i < g_track.size())
+		while (!next && i < chordEvents.size())
 		{
-			if (g_track[i]->getType() == CHORD) next = (ChordEvent*) g_track[i];
+			next = chordEvents[i];
 			i++;
 		}
 
@@ -295,6 +299,11 @@ void GuitarTrack::setTempoMicroseconds(unsigned int t_us)
 void GuitarTrack::calcTickTime()
 {
 	tick_us = tempo_us / divTick;
+}
+
+vector<ChordEvent*>& GuitarTrack::getChords()
+{
+	return chordEvents;
 }
 
 // Returns pointer to a GuitarEvent
