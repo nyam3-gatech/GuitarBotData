@@ -337,7 +337,6 @@ void GuitarTrack::run_track()
 			case CHORD:
 			{
 				ChordEvent* chordPtr = (ChordEvent*)event;
-
 				
 				if (chordPtr->getLowestFret() < carFret)
 				{
