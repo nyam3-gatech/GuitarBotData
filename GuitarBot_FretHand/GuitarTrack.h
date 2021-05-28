@@ -25,7 +25,7 @@ private:
 
 	// GTab - Used to calculate strings and frets to use
 
-	GTab gtab;
+	GTab gTab;
 
 	// Track state to prevent running the sane track at the same time
 

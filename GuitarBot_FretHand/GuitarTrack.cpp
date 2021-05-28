@@ -16,7 +16,7 @@ GuitarTrack::GuitarTrack(MIDI_Reader& m)
 	tuning[4] = 59; // B
 	tuning[5] = 64; // E
 
-	gtab = GTab(tuning);
+	gTab = GTab(tuning);
 
 	processMIDI(m);
 
@@ -32,6 +32,7 @@ GuitarTrack::~GuitarTrack()
 	{
 		delete ptr;
 	}
+	if (arduinoInterface) delete arduinoInterface;
 }
 
 // Process MIDI data into playable chord events stored in the guitar track.
@@ -206,8 +207,8 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			delete ptr;
 		}
 	}
-	
-	gtab.setFrets(chordEvents);
+
+	gTab.setFrets(chordEvents);
 
 	// Last Chord
 	if (chord_ptr)
