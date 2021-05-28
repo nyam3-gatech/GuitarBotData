@@ -1,5 +1,7 @@
 #include "GTab.h"
 
+#include <iostream>
+
 Fingering::Fingering()
 {
 	for (int i = 0; i < 6; i++)
@@ -35,7 +37,7 @@ void Fingering::assignFingering(ChordEvent* chord)
 {
 	chord->sortByPitch();
 
-	for (int i = 0; i < chord->getNumNotes(); i++)
+	for (unsigned int i = 0; i < chord->getNumNotes(); i++)
 	{
 		chord->getNotes()[i].setGuitarString(strings[i]);
 		chord->getNotes()[i].setFret(frets[i]);
@@ -44,7 +46,12 @@ void Fingering::assignFingering(ChordEvent* chord)
 	chord->setPlayable();
 }
 
-ChordFingerings::ChordFingerings(uint64_t notes_, vector<Fingering>& fingerings_)
+ChordFingerings::ChordFingerings()
+{
+	notes = 0;
+}
+
+ChordFingerings::ChordFingerings(uint64_t notes_, vector<Fingering*>& fingerings_)
 {
 	notes = notes_;
 	fingerings_.shrink_to_fit();
@@ -53,10 +60,10 @@ ChordFingerings::ChordFingerings(uint64_t notes_, vector<Fingering>& fingerings_
 
 Fingering ChordFingerings::getFingering(char n)
 {
-	return fingerings[n];
+	return *(fingerings[n]);
 }
 
-vector<Fingering>& ChordFingerings::getFingerings()
+vector<Fingering*>& ChordFingerings::getFingerings()
 {
 	return fingerings;
 }
@@ -66,12 +73,20 @@ bool ChordFingerings::isMatching(uint64_t chord)
 	return (notes == chord);
 }
 
+GTabNode::GTabNode()
+{
+	previous = 0;
+	f = 0;
+	chord = 0;
+	score = 0x80000000; // Minimum value of signed 32-bit int in two's complement
+}
+
 GTabNode::GTabNode(Fingering* f_, ChordEvent* chord_)
 {
 	previous = 0;
 	f = f_;
 	chord = chord_;
-	score = 0;
+	score = 0x80000000; // Minimum value of signed 32-bit int in two's complement
 }
 
 GTab::GTab()
@@ -92,31 +107,48 @@ GTab::GTab(unsigned char* tuning_)
 	}
 }
 
+GTab::~GTab()
+{
+	for (vector<GTabNode*> v : fingeringGraph)
+	{
+		for (GTabNode* nodeptr : v) delete nodeptr;
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		for (ChordFingerings& c : possibleFingerings[i])
+		{
+			for (Fingering* fptr : c.getFingerings()) delete fptr;
+		}
+	}
+}
+
 int GTab::searchForChord(int numNotes, uint64_t chord)
 {
-	vector<ChordFingerings>& list = possibleFingerings[numNotes];
+	vector<ChordFingerings>& list = possibleFingerings[numNotes - 1];
 
-	for (int i = 0; i < list.size(); i++)
+	for (unsigned int i = 0; i < list.size(); i++)
 	{
-		if ((list)[i].isMatching(chord)) return i;
+		if (list[i].isMatching(chord)) return i;
 	}
 	return -1;
 }
 
-ChordFingerings& GTab::getPossibleFingerings(ChordEvent& chord)
+ChordFingerings& GTab::getPossibleFingerings(ChordEvent* chord)
 {
-	unsigned char numNotes = chord.getNumNotes();
-	uint64_t chordNotes = chord.notesToLong();
+	unsigned char numNotes = chord->getNumNotes();
+	uint64_t chordNotes = chord->notesToLong();
+
+	vector<ChordFingerings>& list = possibleFingerings[numNotes - 1];
 
 	int index = searchForChord(numNotes, chordNotes);
-	if (index != -1) return possibleFingerings[numNotes][index];
+	if (index != -1) return list[index];
 
 	vector<vector<char>> possibleFrets;
-	vector<Fingering> fingerings;
+	vector<Fingering*> fingerings;
 	bool hammerFlag = 0;
 	Fingering buffer;
 
-	for (int i = 0; i < numNotes; i++) possibleFrets.push_back(chord.getNotes()[i].getPossibleFrets(tuning));
+	for (int i = 0; i < numNotes; i++) possibleFrets.push_back(chord->getNotes()[i].getPossibleFrets(tuning));
 
 	if (numNotes == 2)
 	{
@@ -127,24 +159,24 @@ ChordFingerings& GTab::getPossibleFingerings(ChordEvent& chord)
 		searchFingerings(possibleFrets, numNotes, buffer, fingerings);
 	}
 
-	possibleFingerings[numNotes].push_back(ChordFingerings(chordNotes, fingerings));
-	return possibleFingerings[numNotes][possibleFingerings[numNotes].size() - 1];
+	list.push_back(ChordFingerings(chordNotes, fingerings));
+	return list[list.size() - 1];
 }
 
-void GTab::searchFingerings(vector<vector<char>>& possibleFrets, char n, Fingering& buffer, vector<Fingering>& fingerings)
+void GTab::searchFingerings(vector<vector<char>>& possibleFrets, char n, Fingering& buffer, vector<Fingering*>& fingerings)
 {
 #define SCORE_CUTOFF -1000
 
 	if (n == 0)
 	{
 		getIntraFitness(buffer);
-		if (buffer.intrafit > SCORE_CUTOFF) fingerings.push_back(buffer);
+		if (buffer.intrafit > SCORE_CUTOFF) fingerings.push_back(new Fingering(buffer));
 	}
 	else
 	{
 		int noteIndex = possibleFrets.size() - n;
 
-		for (int i = 0; i < possibleFrets[noteIndex].size(); i++)
+		for (unsigned int i = 0; i < possibleFrets[noteIndex].size(); i++)
 		{
 			char fret = possibleFrets[noteIndex][i];
 
@@ -168,12 +200,12 @@ void GTab::searchFingerings(vector<vector<char>>& possibleFrets, char n, Fingeri
 	}
 }
 
-void GTab::searchAllFingerings(vector<vector<char>>& possibleFrets, char n, Fingering& buffer, vector<Fingering>& fingerings)
+void GTab::searchAllFingerings(vector<vector<char>>& possibleFrets, char n, Fingering& buffer, vector<Fingering*>& fingerings)
 {
 	if (n == 0)
 	{
 		getIntraFitness(buffer);
-		fingerings.push_back(buffer);
+		if (buffer.intrafit > SCORE_CUTOFF) fingerings.push_back(new Fingering(buffer));
 	}
 	else
 	{
@@ -187,7 +219,7 @@ void GTab::searchAllFingerings(vector<vector<char>>& possibleFrets, char n, Fing
 			bool duplicate = 0;
 			for (int j = 0; j < noteIndex; j++)
 			{
-				if (buffer.strings[j] == i + 1 && buffer.frets[j] == fret)
+				if ((buffer.strings[j] == (i + 1)) && (buffer.frets[j] == fret))
 				{
 					duplicate = 1;
 					break;
@@ -198,17 +230,18 @@ void GTab::searchAllFingerings(vector<vector<char>>& possibleFrets, char n, Fing
 			buffer.strings[noteIndex] = i + 1;
 			buffer.frets[noteIndex] = fret;
 
-			searchFingerings(possibleFrets, n - 1, buffer, fingerings);
+			searchAllFingerings(possibleFrets, n - 1, buffer, fingerings);
 		}
 	}
 }
 
 int GTab::getIntraFitness(Fingering& f)
 {
-	int fitness = 500; // base fitness
+	int fitness = 0; // base fitness
 
 	int nonOpenCount = 0;
 	int fretSum = 0;
+	int stringSum = 0;
 
 	char minFret = 25;
 	char maxFret = -1;
@@ -219,6 +252,8 @@ int GTab::getIntraFitness(Fingering& f)
 		{
 			break;
 		}
+
+		stringSum += f.strings[n];
 
 		for (int i = 0; i < n; i++)
 		{
@@ -248,81 +283,147 @@ int GTab::getIntraFitness(Fingering& f)
 		if(maxFret - minFret > MAX_FRET_RANGE - 1) fitness -= 3000; // Cannot be played
 	}
 
+	//fitness -= 5 * log(stringSum + 1);
+
 	f.intrafit = fitness;
 
 	return fitness;
 }
-int GTab::getInterFitness(Fingering& f1, Fingering& f2)
+int GTab::getInterFitness(GTabNode* node1, GTabNode* node2)
 {
-	return 0;
+	Fingering& f1 = *(node1->f);
+	Fingering& f2 = *(node2->f);
+
+	int fitness = 0;
+
+	int nonOpenCount1 = 0;
+	int fretSum1 = 0;
+	int nonOpenCount2 = 0;
+	int fretSum2 = 0;
+
+	for (int i = 0; i < 6; i++)
+	{
+		if (f1.strings[i] != 0)
+		{
+			char fret1 = f1.frets[i];
+
+			if (fret1)
+			{
+				nonOpenCount1++;
+				fretSum1 += fret1;
+			}
+		}
+
+		if (f2.strings[i] != 0)
+		{
+			char fret2 = f2.frets[i];
+
+			if (fret2)
+			{
+				nonOpenCount2++;
+				fretSum2 += fret2;
+			}
+		}
+	}
+
+	if (nonOpenCount2)
+	{
+		if (nonOpenCount1)
+		{
+			int averageFretDiff = (fretSum1 / nonOpenCount1) + (fretSum2 / nonOpenCount2);
+			fitness -= 10 * (averageFretDiff * averageFretDiff);
+		}
+		else if(node1->previous)
+		{
+			Fingering& fprev = *(node1->previous->f);
+
+			for (int i = 0; i < 6; i++)
+			{
+				if (fprev.strings[i] == 0) break;
+
+				char fret1 = fprev.frets[i];
+
+				if (fret1)
+				{
+					nonOpenCount1++;
+					fretSum1 += fret1;
+				}
+			}
+
+			if (nonOpenCount1)
+			{
+				int averageFretDiff = (fretSum1 / nonOpenCount1) + (fretSum2 / nonOpenCount2);
+				fitness -= 8 * (averageFretDiff * averageFretDiff);
+			}
+		}
+	}
+
+	return fitness;
 }
 
 void GTab::setFrets(vector<ChordEvent*>& chords)
 {
-	vector<vector<GTabNode>> fingeringGraph;
-	int graphIndex = 0;
+	bool first = fingeringGraph.size() == 0 ? 1 : 0;
 
 	for (int i = 0; i < chords.size(); i++)
 	{
 		ChordEvent* chord = chords[i];
 
-		ChordFingerings& chordFingerings = getPossibleFingerings(*chord);
+		vector<Fingering*>& fingerings = getPossibleFingerings(chord).getFingerings();
 
-		if (chordFingerings.getFingerings().size() == 0) continue;
+		if (fingerings.size() == 0) continue;
 
-		if (graphIndex == 0)
+		vector<GTabNode*> nodes;
+		nodes.reserve(fingerings.size());
+
+		if (first)
 		{
-			vector<GTabNode> nodes;
-			for (Fingering& f : chordFingerings.getFingerings())
+			for (Fingering* f : fingerings)
 			{
-				GTabNode node = GTabNode(&f, chord);
-				node.score = f.intrafit;
+				GTabNode* node = new GTabNode(f, chord);
+				node->score = f->intrafit;
 				nodes.push_back(node);
 			}
 
-			fingeringGraph.push_back(nodes);
+			first = 0;
 		}
 		else
 		{
-			vector<GTabNode> nodes;
-			for (Fingering& f : chordFingerings.getFingerings())
+			for (Fingering* f : fingerings)
 			{
-				GTabNode node = GTabNode(&f, chord);
+				GTabNode* node = new GTabNode(f, chord);
 
-				int priorIndex = graphIndex - 1;
+				vector<GTabNode*>& priorNodes = fingeringGraph.back();
 
-				for (int j = 0; j < fingeringGraph[priorIndex].size(); j++)
+				for (int j = 0; j < priorNodes.size(); j++)
 				{
-					GTabNode& prior = fingeringGraph[priorIndex][j];
+					GTabNode* prior = priorNodes[j];
 
-					int tempScore = prior.score + getInterFitness(*prior.f, f);
+					int tempScore = prior->score + getInterFitness(prior, node);
 
-					if (tempScore > node.score)
+					if (tempScore > node->score)
 					{
-						node.previous = &prior;
-						node.score = tempScore;
+						node->previous = prior;
+						node->score = tempScore;
 					}
 				}
 
-				node.score += f.intrafit;
+				node->score += f->intrafit;
 
 				nodes.push_back(node);
 			}
-
-			fingeringGraph.push_back(nodes);
 		}
 
-		graphIndex++;
+		fingeringGraph.push_back(nodes);
 	}
 
-	graphIndex--;
-
-	GTabNode* nodeptr = &fingeringGraph[graphIndex][0];
-	for (int i = 1; i < fingeringGraph[graphIndex].size(); i++)
+	vector<GTabNode*>& endNodes = fingeringGraph.back();
+	GTabNode* nodeptr = endNodes[0];
+	for (int i = 1; i < endNodes.size(); i++)
 	{
-		if (fingeringGraph[graphIndex][i].score > nodeptr->score)
+		if (endNodes[i]->score > nodeptr->score)
 		{
-			nodeptr = &fingeringGraph[graphIndex][i];
+			nodeptr = endNodes[i];
 		}
 	}
 

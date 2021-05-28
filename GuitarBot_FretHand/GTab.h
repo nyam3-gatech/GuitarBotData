@@ -3,6 +3,7 @@
 
 #include "GuitarEvent.h"
 #include <vector>
+#include <list>
 
 #define MAX_FRET_RANGE 3
 
@@ -16,6 +17,7 @@ private:
 	int intrafit;
 
 	friend class ChordFingerings; // Allows ChordFingerings to access private variables
+	friend class GTabNode;
 	friend class GTab; // Allows GTab to access private variables
 
 public:
@@ -30,14 +32,18 @@ class ChordFingerings
 {
 private:
 	uint64_t notes;
-	vector<Fingering> fingerings;
+	vector<Fingering*> fingerings;
+
+	friend class GTabNode;
+	friend class GTab; // Allows GTab to access private variables
 
 public:
-	ChordFingerings(uint64_t, vector<Fingering>&);
+	ChordFingerings();
+	ChordFingerings(uint64_t, vector<Fingering*>&);
 
 	Fingering getFingering(char);
 
-	vector<Fingering>& getFingerings();
+	vector<Fingering*>& getFingerings();
 
 	bool isMatching(uint64_t);
 };
@@ -64,19 +70,22 @@ private:
 
 	vector<ChordFingerings> possibleFingerings[6];
 
+	list<vector<GTabNode*>> fingeringGraph;
+
 	int searchForChord(int, uint64_t);
 
-	ChordFingerings& getPossibleFingerings(ChordEvent&);
-	void searchFingerings(vector<vector<char>>&, char, Fingering&, vector<Fingering>&);
-	void searchAllFingerings(vector<vector<char>>&, char, Fingering&, vector<Fingering>&);
+	ChordFingerings& getPossibleFingerings(ChordEvent*);
+	void searchFingerings(vector<vector<char>>&, char, Fingering&, vector<Fingering*>&);
+	void searchAllFingerings(vector<vector<char>>&, char, Fingering&, vector<Fingering*>&);
 
 	int getIntraFitness(Fingering&);
-	int getInterFitness(Fingering&, Fingering&);
+	int getInterFitness(GTabNode*, GTabNode*);
 
 public:
 
 	GTab();
 	GTab(unsigned char*);
+	~GTab();
 	
 	void setFrets(vector<ChordEvent*>&);
 };
