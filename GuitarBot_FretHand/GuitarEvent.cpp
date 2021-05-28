@@ -134,6 +134,9 @@ string NoteEvent::toString()
 
 ChordEvent::ChordEvent(int tick_, NoteEvent n) : GuitarEvent(tick_, CHORD)
 {
+	direction = 0;
+	contact_string = 0;
+	final_contact_string = 0;
 	playable = 0;
 	notes.push_back(n);
 }
@@ -261,6 +264,7 @@ bool ChordEvent::removeNote(int n)
 	int index = checkForNote(n);
 	if (index == -1) return 0;
 	notes.erase(notes.begin() + index);
+	return 1;
 }
 
 vector<NoteEvent>& ChordEvent::getNotes()
@@ -268,7 +272,7 @@ vector<NoteEvent>& ChordEvent::getNotes()
 	return notes;
 }
 
-unsigned char ChordEvent::getNumNotes()
+unsigned int ChordEvent::getNumNotes()
 {
 	return notes.size();
 }

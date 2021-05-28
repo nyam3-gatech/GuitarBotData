@@ -162,7 +162,7 @@ public:
 	float getFinalPosition();
 
 	std::vector<NoteEvent>& getNotes();
-	unsigned char getNumNotes();
+	unsigned int getNumNotes();
 	uint64_t notesToLong();
 
 	std::string toString();
