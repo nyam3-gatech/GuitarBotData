@@ -1,0 +1,340 @@
+chord :: tick = 0, m = 1, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 0, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 240, m = 1, technique = pick, direction = up, cs = 5, fcs = 5
+   <note :: tick = 240, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 480, m = 1, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 480, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 720, m = 1, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 720, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 1200, m = 1, technique = pick, direction = up, cs = 5, fcs = 5
+   <note :: tick = 1200, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 1440, m = 1, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 1440, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 1680, m = 1, technique = pick, direction = up, cs = 5, fcs = 5
+   <note :: tick = 1680, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 1920, m = 2, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 1920, duration = 239, channel = 0, note = 66, velocity = 80, string = 6, fret = 2>
+chord :: tick = 2160, m = 2, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 2160, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 2400, m = 2, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 2400, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 2640, m = 2, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 2640, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 3120, m = 2, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 3120, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 3360, m = 2, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 3360, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 3600, m = 2, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 3600, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 3840, m = 3, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 3840, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 4080, m = 3, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 4080, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 4320, m = 3, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 4320, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 4560, m = 3, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 4560, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 5040, m = 3, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 5040, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 5280, m = 3, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 5280, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 5520, m = 3, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 5520, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 5760, m = 4, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 5760, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 6000, m = 4, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 6000, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 6240, m = 4, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 6240, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 6480, m = 4, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 6480, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 6960, m = 4, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 6960, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 7200, m = 4, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 7200, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 7440, m = 4, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 7440, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 7680, m = 5, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 7680, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 7920, m = 5, technique = pick, direction = up, cs = 5, fcs = 5
+   <note :: tick = 7920, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 8160, m = 5, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 8160, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 8400, m = 5, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 8400, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 8880, m = 5, technique = pick, direction = up, cs = 5, fcs = 5
+   <note :: tick = 8880, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 9120, m = 5, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 9120, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 9360, m = 5, technique = pick, direction = up, cs = 5, fcs = 5
+   <note :: tick = 9360, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 9600, m = 6, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 9600, duration = 239, channel = 0, note = 66, velocity = 80, string = 6, fret = 2>
+chord :: tick = 9840, m = 6, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 9840, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 10080, m = 6, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 10080, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 10320, m = 6, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 10320, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 10800, m = 6, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 10800, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 11040, m = 6, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 11040, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 11280, m = 6, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 11280, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 11520, m = 7, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 11520, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 11760, m = 7, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 11760, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 12000, m = 7, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 12000, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 12240, m = 7, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 12240, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 12720, m = 7, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 12720, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 12960, m = 7, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 12960, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 13200, m = 7, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 13200, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 13440, m = 8, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 13440, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 13680, m = 8, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 13680, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 13920, m = 8, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 13920, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 14160, m = 8, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 14160, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 14640, m = 8, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 14640, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 14880, m = 8, technique = pick, direction = up, cs = 3, fcs = 3
+   <note :: tick = 14880, duration = 239, channel = 0, note = 50, velocity = 80, string = 3, fret = 0>
+chord :: tick = 15120, m = 8, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 15120, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 15360, m = 9, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 15360, duration = 239, channel = 0, note = 57, velocity = 80, string = 4, fret = 2>
+chord :: tick = 15840, m = 9, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 15840, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 16080, m = 9, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 16080, duration = 239, channel = 0, note = 56, velocity = 80, string = 4, fret = 1>
+chord :: tick = 16560, m = 9, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 16560, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 16800, m = 9, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 16800, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 17040, m = 9, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 17040, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 17280, m = 10, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 17280, duration = 239, channel = 0, note = 56, velocity = 80, string = 4, fret = 1>
+chord :: tick = 17520, m = 10, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 17520, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 17760, m = 10, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 17760, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 18000, m = 10, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 18000, duration = 239, channel = 0, note = 52, velocity = 80, string = 3, fret = 2>
+chord :: tick = 18480, m = 10, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 18480, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 18720, m = 10, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 18720, duration = 239, channel = 0, note = 52, velocity = 80, string = 3, fret = 2>
+chord :: tick = 18960, m = 10, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 18960, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 19200, m = 11, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 19200, duration = 239, channel = 0, note = 57, velocity = 80, string = 4, fret = 2>
+chord :: tick = 19680, m = 11, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 19680, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 19920, m = 11, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 19920, duration = 239, channel = 0, note = 56, velocity = 80, string = 4, fret = 1>
+chord :: tick = 20400, m = 11, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 20400, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 20640, m = 11, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 20640, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 20880, m = 11, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 20880, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 21120, m = 12, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 21120, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 21360, m = 12, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 21360, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 21600, m = 12, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 21600, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 21840, m = 12, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 21840, duration = 239, channel = 0, note = 57, velocity = 80, string = 4, fret = 2>
+chord :: tick = 22320, m = 12, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 22320, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 22560, m = 12, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 22560, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 23040, m = 13, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 23040, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 23280, m = 13, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 23280, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 23520, m = 13, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 23520, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 23760, m = 13, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 23760, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 24000, m = 13, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 24000, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 24240, m = 13, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 24240, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 24480, m = 13, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 24480, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 24720, m = 13, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 24720, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 24960, m = 14, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 24960, duration = 239, channel = 0, note = 62, velocity = 80, string = 5, fret = 3>
+chord :: tick = 25200, m = 14, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 25200, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 25440, m = 14, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 25440, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 25680, m = 14, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 25680, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 25920, m = 14, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 25920, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 26160, m = 14, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 26160, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 26400, m = 14, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 26400, duration = 239, channel = 0, note = 57, velocity = 80, string = 4, fret = 2>
+chord :: tick = 26640, m = 14, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 26640, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 26880, m = 15, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 26880, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 27120, m = 15, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 27120, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 27360, m = 15, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 27360, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 27600, m = 15, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 27600, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 27840, m = 15, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 27840, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 28080, m = 15, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 28080, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 28320, m = 15, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 28320, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 28560, m = 15, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 28560, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 28800, m = 16, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 28800, duration = 239, channel = 0, note = 66, velocity = 80, string = 6, fret = 2>
+chord :: tick = 29040, m = 16, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 29040, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 29280, m = 16, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 29280, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 29520, m = 16, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 29520, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 29760, m = 16, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 29760, duration = 239, channel = 0, note = 62, velocity = 80, string = 5, fret = 3>
+chord :: tick = 30000, m = 16, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 30000, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 30240, m = 16, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 30240, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 30480, m = 16, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 30480, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 30720, m = 17, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 30720, duration = 239, channel = 0, note = 57, velocity = 80, string = 4, fret = 2>
+chord :: tick = 31200, m = 17, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 31200, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 31440, m = 17, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 31440, duration = 239, channel = 0, note = 56, velocity = 80, string = 4, fret = 1>
+chord :: tick = 31920, m = 17, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 31920, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 32160, m = 17, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 32160, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 32400, m = 17, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 32400, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 32640, m = 18, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 32640, duration = 239, channel = 0, note = 56, velocity = 80, string = 4, fret = 1>
+chord :: tick = 32880, m = 18, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 32880, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 33120, m = 18, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 33120, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 33360, m = 18, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 33360, duration = 239, channel = 0, note = 52, velocity = 80, string = 3, fret = 2>
+chord :: tick = 33840, m = 18, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 33840, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 34080, m = 18, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 34080, duration = 239, channel = 0, note = 52, velocity = 80, string = 3, fret = 2>
+chord :: tick = 34320, m = 18, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 34320, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 34560, m = 19, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 34560, duration = 239, channel = 0, note = 57, velocity = 80, string = 4, fret = 2>
+chord :: tick = 35040, m = 19, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 35040, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 35280, m = 19, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 35280, duration = 239, channel = 0, note = 56, velocity = 80, string = 4, fret = 1>
+chord :: tick = 35760, m = 19, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 35760, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 36000, m = 19, technique = pick, direction = down, cs = 3, fcs = 3
+   <note :: tick = 36000, duration = 239, channel = 0, note = 54, velocity = 80, string = 3, fret = 4>
+chord :: tick = 36240, m = 19, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 36240, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 36480, m = 20, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 36480, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 36720, m = 20, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 36720, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 36960, m = 20, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 36960, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 37200, m = 20, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 37200, duration = 239, channel = 0, note = 57, velocity = 80, string = 4, fret = 2>
+chord :: tick = 37680, m = 20, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 37680, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 37920, m = 20, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 37920, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 38400, m = 21, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 38400, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 38640, m = 21, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 38640, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 38880, m = 21, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 38880, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 39120, m = 21, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 39120, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 39360, m = 21, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 39360, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 39600, m = 21, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 39600, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 39840, m = 21, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 39840, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 40080, m = 21, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 40080, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 40320, m = 22, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 40320, duration = 239, channel = 0, note = 62, velocity = 80, string = 5, fret = 3>
+chord :: tick = 40560, m = 22, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 40560, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 40800, m = 22, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 40800, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 41040, m = 22, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 41040, duration = 239, channel = 0, note = 59, velocity = 80, string = 5, fret = 0>
+chord :: tick = 41280, m = 22, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 41280, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 41520, m = 22, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 41520, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 41760, m = 22, technique = pick, direction = down, cs = 4, fcs = 4
+   <note :: tick = 41760, duration = 239, channel = 0, note = 57, velocity = 80, string = 4, fret = 2>
+chord :: tick = 42000, m = 22, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 42000, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 42240, m = 23, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 42240, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 42480, m = 23, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 42480, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 42720, m = 23, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 42720, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 42960, m = 23, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 42960, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 43200, m = 23, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 43200, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 43440, m = 23, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 43440, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 43680, m = 23, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 43680, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 43920, m = 23, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 43920, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 44160, m = 24, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 44160, duration = 239, channel = 0, note = 66, velocity = 80, string = 6, fret = 2>
+chord :: tick = 44400, m = 24, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 44400, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 44640, m = 24, technique = pick, direction = down, cs = 6, fcs = 6
+   <note :: tick = 44640, duration = 239, channel = 0, note = 64, velocity = 80, string = 6, fret = 0>
+chord :: tick = 44880, m = 24, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 44880, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 45120, m = 24, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 45120, duration = 239, channel = 0, note = 62, velocity = 80, string = 5, fret = 3>
+chord :: tick = 45360, m = 24, technique = pick, direction = up, cs = 2, fcs = 2
+   <note :: tick = 45360, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
+chord :: tick = 45600, m = 24, technique = pick, direction = down, cs = 5, fcs = 5
+   <note :: tick = 45600, duration = 239, channel = 0, note = 61, velocity = 80, string = 5, fret = 2>
+chord :: tick = 45840, m = 24, technique = pick, direction = up, cs = 0, fcs = 0
+   <note :: tick = 45840, duration = 239, channel = 0, note = 45, velocity = 80, string = 2, fret = 0>
