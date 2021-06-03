@@ -2,7 +2,7 @@
 #define GTAB
 
 #include "GuitarEvent.h"
-#include <vector>
+
 #include <list>
 
 #define MAX_FRET_RANGE 3

@@ -1,7 +1,5 @@
 #include "GTab.h"
 
-#include <iostream>
-
 Fingering::Fingering()
 {
 	for (int i = 0; i < 6; i++)
