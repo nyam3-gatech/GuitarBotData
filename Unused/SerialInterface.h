@@ -8,6 +8,8 @@
 #include <vector>
 #include <thread>
 
+/*
+
 // OrderTicket encapsulates timing information, order, and order data
 class OrderTicket
 {
@@ -74,6 +76,8 @@ public:
 	bool isSending();
 
 };
+
+*/
 
 #endif
 

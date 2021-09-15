@@ -32,7 +32,6 @@ GuitarTrack::~GuitarTrack()
 	{
 		delete ptr;
 	}
-	if (arduinoInterface) delete arduinoInterface;
 }
 
 // Process MIDI data into playable chord events stored in the guitar track.
@@ -347,7 +346,7 @@ void GuitarTrack::run_track()
 			case CHORD:
 			{
 				ChordEvent* chordPtr = (ChordEvent*)event;
-				
+				/*
 				if (chordPtr->getLowestFret() < carFret)
 				{
 					arduinoInterface->addOrder(OrderTicket(0, MOVE, carFret - chordPtr->getLowestFret()));
@@ -363,6 +362,7 @@ void GuitarTrack::run_track()
 					arduinoInterface->addOrder(OrderTicket(400, ON, pin));
 					noteBuffer.push_back(&note);
 				}
+				*/
 				break;
 			}
 			case TEMPO:
@@ -391,9 +391,11 @@ void GuitarTrack::run_track()
 			NoteEvent note = *(noteBuffer[i]);
 			if (tick >= noteBuffer[i]->getEndTick())
 			{
+				/*
 				unsigned char pin = ((note.getFret() - carFret) * 6) + note.getGuitarString() + 1;
 				arduinoInterface->addOrder(OrderTicket(0, OFF, pin));
 				noteBuffer.erase(noteBuffer.begin() + i);
+				*/
 			}
 			else
 			{
@@ -449,12 +451,7 @@ void GuitarTrack::run()
 
 void GuitarTrack::stop()
 {
-	if(state != READY) state = STOP;
-}
-
-void GuitarTrack::addSerialInterface(SerialInterface* serialInterface)
-{
-	arduinoInterface = serialInterface;
+	if (state != READY) state = STOP;
 }
 
 // Creates a string representation of the track

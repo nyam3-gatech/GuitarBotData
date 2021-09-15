@@ -4,7 +4,6 @@
 #include "MIDI_Reader.h"
 #include "GuitarEvent.h"
 #include "GTab.h"
-#include "SerialInterface.h"
 
 class GuitarTrack
 {
@@ -55,8 +54,6 @@ private:
 
 	unsigned char tuning[6]; // Tuning of the guitar
 
-	SerialInterface* arduinoInterface;
-
 	char frets[6]; // Current frets being pressed down
 	char carFret; // Which fret are the servos currently at
 
@@ -77,8 +74,6 @@ public:
 	void stop();
 
 	char getState();
-
-	void addSerialInterface(SerialInterface*);
 
 	string toString();
 };
