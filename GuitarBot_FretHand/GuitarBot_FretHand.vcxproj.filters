@@ -59,5 +59,8 @@
     <ClInclude Include="GTab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GBotFret.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
