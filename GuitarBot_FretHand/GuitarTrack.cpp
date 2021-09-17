@@ -45,7 +45,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 	vector<GuitarEvent*> tempNotes; // holds NoteEvents without a duration
 	vector<GuitarEvent*> tempTrack;
 
-	int minimumDuration = INT_MAX;
+	int minimumDuration = 0x7FFFFFFF;
 
 	for (Track_Chunk m_track : m_reader.getTracks())
 	{
