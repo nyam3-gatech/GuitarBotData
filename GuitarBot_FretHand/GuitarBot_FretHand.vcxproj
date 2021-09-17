@@ -144,8 +144,6 @@
     <ClCompile Include="GuitarTrack.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MIDI_Reader.cpp" />
-    <ClCompile Include="SerialInterface.cpp" />
-    <ClCompile Include="serialib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GBotFret.h" />
@@ -153,9 +151,6 @@
     <ClInclude Include="GuitarEvent.h" />
     <ClInclude Include="GuitarTrack.h" />
     <ClInclude Include="MIDI_Reader.h" />
-    <ClInclude Include="Orders.h" />
-    <ClInclude Include="SerialInterface.h" />
-    <ClInclude Include="serialib.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

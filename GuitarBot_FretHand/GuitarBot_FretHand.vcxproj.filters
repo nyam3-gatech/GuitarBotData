@@ -27,12 +27,6 @@
     <ClCompile Include="MIDI_Reader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SerialInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="serialib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GTab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,15 +39,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MIDI_Reader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orders.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SerialInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="serialib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GTab.h">
