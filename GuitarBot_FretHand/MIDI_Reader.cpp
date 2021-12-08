@@ -128,35 +128,34 @@ void Track_Chunk::read(ifstream& inputFile)
 
 	
 	// Counter for how many bytes of this track has been read.
-	int bytesRead = 0;
+	bool endOfTrack = 0;
 	// Keep reading the file for track events data until the bytes read equal the length of the track
-	for (int i = 0; bytesRead < length; i++)
+	int i = 0;
+	while (!endOfTrack)
 	{
 		events.push_back(MTrk_Event()); // Create new MTrk_Event object and add it to the events vector
-		bytesRead += events[i].read(inputFile, c); // Read event data from file, add the number of bytes read to the counter
+		endOfTrack = events[i].read(inputFile, c);
+		i++;
 	}
 }
 
 // Read data for a single MTrk event from a file
-int MTrk_Event::read(ifstream& inputFile, unsigned char& runningStatus)
+bool MTrk_Event::read(ifstream& inputFile, unsigned char& runningStatus)
 {
 	data.clear(); // clear the data vector
 
-	int bytesRead = 1; // Counter for how many bytes have been read
+	bool endOfTrack = 0; // Is 1 when end of track event is found
 	unsigned char c; // input buffer for 1 byte of data
 
-	delta_time = 0;
-	bytesRead += readVLQ(inputFile, delta_time); // Reads in the delta time value for the event
+	delta_time = readVLQ(inputFile); // Reads in the delta time value for the event
 
 	// Get the status byte for the event
 	inputFile >> c;
-
 
 	// Special case for when status byte is omitted
 	if (c < 0x80)
 	{
 		inputFile.putback(c);
-		bytesRead--;
 	}
 	else
 	{
@@ -178,7 +177,7 @@ int MTrk_Event::read(ifstream& inputFile, unsigned char& runningStatus)
 	else if (c == 0xF0)
 	{
 		// Read in the length of the following event data
-		bytesRead += readVLQ(inputFile, bytesToRead);
+		bytesToRead += readVLQ(inputFile);
 	}
 	else if (c == 0xFF)
 	{
@@ -186,8 +185,10 @@ int MTrk_Event::read(ifstream& inputFile, unsigned char& runningStatus)
 		inputFile >> c;
 		data.push_back(c);
 
+		if (c == 0x2F) endOfTrack = 1;
+
 		// Read in the length of the following event data
-		bytesRead += 1 + readVLQ(inputFile, bytesToRead);
+		bytesToRead += readVLQ(inputFile);
 	}
 
 	// Read in any data bytes for this event
@@ -197,28 +198,26 @@ int MTrk_Event::read(ifstream& inputFile, unsigned char& runningStatus)
 		data.push_back(c);
 	}
 
-	return bytesRead + bytesToRead;
+	return endOfTrack;
 }
 
 // Read a variable length quantity from an input file and store the value in a buffer. Returns the number of bytes read.
-int MTrk_Event::readVLQ(ifstream& inputFile, int& buffer)
+int MTrk_Event::readVLQ(ifstream& inputFile)
 {
-	int bytesRead = 0; // Counter for how many bytes have been read
 	unsigned char c; // input buffer for 1 byte of data
 
-	buffer = 0;
+	int value = 0;
 
 	// Read one byte first
 	do
 	{
 		inputFile >> c;
-		buffer <<= 7; // Each byte contains 7 bits of numerical data, so left shift by 7 bits for each byte read after the first.
-		buffer += c & 0x7F; // Add the value of c with the first bit removed.
-		bytesRead++;
+		value <<= 7; // Each byte contains 7 bits of numerical data, so left shift by 7 bits for each byte read after the first.
+		value += c & 0x7F; // Add the value of c with the first bit removed.
 	}
 	while (c > 0x7F); // If the first bit is a 1, read another byte
 
-	return bytesRead;
+	return value;
 }
 
 /*

@@ -16,10 +16,10 @@ private:
 	int delta_time;
 	vector<unsigned char> data;
 
-	int read(ifstream&, unsigned char&);
+	bool read(ifstream&, unsigned char&);
 
-	// Helper function to read a variable-length quantity from an input file and stores it in an int buffer. Returns the number of bytes read.
-	int readVLQ(ifstream&, int&);
+	// Helper function to read a variable-length quantity from an input file and returns it as an int.
+	int readVLQ(ifstream&);
 
 public:
 
