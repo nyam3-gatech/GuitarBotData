@@ -88,6 +88,7 @@ public:
 	~GTab();
 	
 	void setFrets(vector<ChordEvent*>&);
+	void setFrets(vector<ChordEvent*>&, int);
 };
 
 #endif

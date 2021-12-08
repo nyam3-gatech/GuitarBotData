@@ -233,6 +233,7 @@ void GTab::searchAllFingerings(vector<vector<char>>& possibleFrets, char n, Fing
 	}
 }
 
+// Single chord fitness
 int GTab::getIntraFitness(Fingering& f)
 {
 	int fitness = 0; // base fitness
@@ -287,6 +288,8 @@ int GTab::getIntraFitness(Fingering& f)
 
 	return fitness;
 }
+
+// Path fitness between two chords
 int GTab::getInterFitness(GTabNode* node1, GTabNode* node2)
 {
 	Fingering& f1 = *(node1->f);
@@ -430,4 +433,78 @@ void GTab::setFrets(vector<ChordEvent*>& chords)
 		(nodeptr->f)->assignFingering(nodeptr->chord);
 		nodeptr = nodeptr->previous;
 	}
+}
+
+void GTab::setFrets(vector<ChordEvent*>& chords, int index)
+{
+	bool empty = fingeringGraph.size() == 0 ? 1 : 0;
+
+	if (empty)
+	{
+		setFrets(chords);
+		return;
+	}
+
+	list<vector<GTabNode*>>::iterator it = fingeringGraph.begin();
+	advance(it, index);
+	fingeringGraph.erase(it, fingeringGraph.end());
+
+	
+	for (int i = index; i < chords.size(); i++)
+	{
+		ChordEvent* chord = chords[i];
+
+		vector<Fingering*>& fingerings = getPossibleFingerings(chord).getFingerings();
+
+		if (fingerings.size() == 0) continue;
+
+		vector<GTabNode*> nodes;
+		nodes.reserve(fingerings.size());
+
+		for (Fingering* f : fingerings)
+		{
+			GTabNode* node = new GTabNode(f, chord);
+
+			vector<GTabNode*>& priorNodes = fingeringGraph.back();
+
+			for (int j = 0; j < priorNodes.size(); j++)
+			{
+				GTabNode* prior = priorNodes[j];
+
+				int tempScore = prior->score + getInterFitness(prior, node);
+
+				if (tempScore > node->score)
+				{
+					node->previous = prior;
+					node->score = tempScore;
+				}
+			}
+
+			node->score += f->intrafit;
+
+			nodes.push_back(node);
+		}
+
+		if (index > fingeringGraph.size())
+		{
+			fingeringGraph.push_back(nodes);
+		}
+	}
+
+	vector<GTabNode*>& endNodes = fingeringGraph.back();
+	GTabNode* nodeptr = endNodes[0];
+	for (int i = 1; i < endNodes.size(); i++)
+	{
+		if (endNodes[i]->score > nodeptr->score)
+		{
+			nodeptr = endNodes[i];
+		}
+	}
+
+	while (nodeptr)
+	{
+		(nodeptr->f)->assignFingering(nodeptr->chord);
+		nodeptr = nodeptr->previous;
+	}
+
 }
