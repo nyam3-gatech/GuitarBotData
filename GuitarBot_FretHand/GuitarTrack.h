@@ -69,6 +69,7 @@ public:
 	const GuitarEvent* getEvent(int);
 	long long getEventTime(int);
 	long long tick_to_us(int);
+    double tick_to_seconds(int);
 
 	void run();
 	void stop();

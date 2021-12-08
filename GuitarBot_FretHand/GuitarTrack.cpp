@@ -42,7 +42,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 	divTick = m_reader.getDivTick();
 	nSMPTEFormat = m_reader.getNSMPTEFormat();
 
-	vector<GuitarEvent*> tempNotes; // holds NoteEvents without a duration
+	vector<GuitarEvent*> tempNotes; // holds NoteEvents without a play_time
 	vector<GuitarEvent*> tempTrack;
 
 	int minimumDuration = 0x7FFFFFFF;
@@ -106,28 +106,34 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			}
 			else if (status == 0xFF) // Meta-Events
 			{
-				if (m_event.getData(index) == 0x51 && m_event.getData(index + 1) == 0x03) // Set Tempo
+				if (m_event.getData(index) == 0x51) // Set Tempo
 				{
-					// Placeholder
+					int microsecondsPerQuarter = (m_event.getData(index + 1) << 16) + (m_event.getData(index + 2) << 8) + m_event.getData(index + 3);
+					TempoEvent* t_ptr = new TempoEvent(tick, microsecondsPerQuarter);
+					cout << "Tempo: " << microsecondsPerQuarter << endl;
+					tempTrack.push_back(new TempoEvent(tick, microsecondsPerQuarter));
 				}
 			}
 		}
 	}
 
 	int exponent = round(log2((1.0 * minimumDuration) / divTick));
-	int updown_beat_tick = 2 * round(divTick * pow(2, exponent));
+	int updown_beat_tick = round(divTick * pow(2, exponent));
+
 
 	ChordEvent* chord_ptr = 0;
 
+
 	for (unsigned int i = 0; i < tempTrack.size(); i++)
 	{
+
 		GuitarEvent* ptr = tempTrack[i];
 		if (ptr->getType() == NOTE)
 		{
 			NoteEvent* n_ptr = (NoteEvent*) ptr;
 			if (chord_ptr) // check if a chord already exists
 			{
-				if (n_ptr->getTick() < chord_ptr->getTick() + chord_ptr->getDuration()) // check if the starting tick of the note overlaps with the chord's duration
+				if (n_ptr->getTick() < chord_ptr->getTick() + chord_ptr->getDuration()) // check if the starting tick of the note overlaps with the chord's play_time
 				{
 					if (chord_ptr->getNotes().size() >= 6)
 					{
@@ -139,7 +145,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						// If the chord has multiple notes, set the strumming direction based on which beat it is on
 						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
 						{
-							chord_ptr->setDirection(UP);
+                            chord_ptr->setDirection(UP);
 						}
 						else
 						{
@@ -171,7 +177,8 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 					{
 						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
 						{
-							chord_ptr->setDirection(UP);
+
+                            chord_ptr->setDirection(UP);
 						}
 						else
 						{
@@ -179,7 +186,6 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 						}
 						//chord_ptr->setContactStrings();
 					}
-					
 					// create a new ChordEvent and add it to the track
 					chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 					g_track.push_back(chord_ptr);
@@ -256,7 +262,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 		{
 			// Check conditions for when picking direction should be up
 			if	((next && (next->getTechnique() == PICK)) ?
-					((next->getNotes()[0].getGuitarString() > current->getNotes()[0].getGuitarString())
+					((next->getNotes()[0].getGuitarString() < current->getNotes()[0].getGuitarString())
 					|| ((next->getNotes()[0].getGuitarString() == current->getNotes()[0].getGuitarString()) 
 						&& last && last->getTechnique() == PICK && last->getDirection() == DOWN))
 					: (last && last->getTechnique() == PICK && last->getDirection() == DOWN)
@@ -325,6 +331,11 @@ long long GuitarTrack::getEventTime(int index)
 long long GuitarTrack::tick_to_us(int tick)
 {
 	return 0; // PLACEHOLDER
+}
+
+double GuitarTrack::tick_to_seconds(int tick)
+{
+    return 60.0 * tick / (tempo * divTick);
 }
 
 // Runs a guitar track

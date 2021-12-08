@@ -33,6 +33,7 @@ char GuitarEvent::getType() const
 TempoEvent::TempoEvent(int tick_, int tempo_us_) : GuitarEvent(tick_, TEMPO)
 {
 	tempo_us = tempo_us_;
+	bpm = 60000000 / tempo_us;
 }
 
 TempoEvent::~TempoEvent() {}
@@ -44,7 +45,7 @@ int TempoEvent::getTempoMicroseconds() const
 
 string TempoEvent::toString()
 {
-	return "Placeholder\n";
+	return "tempo :: tick = " + to_string(tick) + ", quarter = " + to_string(tempo_us) + " us, bpm = " + to_string(bpm) + "\n";
 }
 
 // NoteEvent
@@ -124,7 +125,7 @@ vector<char> NoteEvent::getPossibleFrets(unsigned char* tuning)
 
 string NoteEvent::toString()
 {
-	string str = "<note :: tick = " + to_string(tick) + ", duration = " + to_string(getDuration());
+	string str = "<note :: tick = " + to_string(tick) + ", play_time = " + to_string(getDuration());
 	str += ", channel = " + to_string(channel) + ", note = " + to_string(note) + ", velocity = " + to_string(velocity);
 	str += ", string = " + to_string(g_string) + ", fret = " + to_string(fret) + ">";
 	return str;
@@ -205,7 +206,7 @@ void ChordEvent::sortByTime()
 	std::sort(notes.begin(), notes.end(), compareByTime);
 }
 
-// Fixes duration of duplicate notes when the same note should be played twice in the same chord
+// Fixes play_time of duplicate notes when the same note should be played twice in the same chord
 void ChordEvent::fixDuplicates()
 {
 	int duplicateIndex = -1;
@@ -362,22 +363,22 @@ float ChordEvent::getPreparePosition()
 {
 	if (getTechnique() == PICK)
 	{
-		return contact_string + ((getDirection() == DOWN) ? PD_P : -PU_P);
+		return contact_string + ((getDirection() == DOWN) ? -PD_P : PU_P);
 	}
 	else
 	{
-		return contact_string + ((getDirection() == DOWN) ? SD_P : -SU_P);
+		return contact_string + ((getDirection() == DOWN) ? -SD_P : SU_P);
 	}
 }
 float ChordEvent::getFinalPosition()
 {
 	if (getTechnique() == PICK)
 	{
-		return final_contact_string + ((getDirection() == DOWN) ? -PD_E : PU_E);
+		return final_contact_string + ((getDirection() == DOWN) ? PD_E : -PU_E);
 	}
 	else
 	{
-		return final_contact_string + ((getDirection() == DOWN) ? -SD_E : SU_E);
+		return final_contact_string + ((getDirection() == DOWN) ? SD_E : -SU_E);
 	}
 }
 

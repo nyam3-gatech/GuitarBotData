@@ -38,12 +38,13 @@ public:
 	virtual std::string toString() = 0;
 };
 
-// TempoEvent changes the duration of a quarter note in microseconds
+// TempoEvent changes the play_time of a quarter note in microseconds
 class TempoEvent : public GuitarEvent
 {
 private:
 
 	int tempo_us;
+	double bpm;
 
 public:
 
@@ -100,7 +101,7 @@ private:
 
 #define PICK 0
 #define STRUM 1
-#define UP 0
+#define UP -1
 #define DOWN 1
 
 	char direction;
