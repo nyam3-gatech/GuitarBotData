@@ -7,8 +7,6 @@
 
 #define MAX_FRET_RANGE 3
 
-using namespace std;
-
 class Fingering
 {
 private:
@@ -32,18 +30,18 @@ class ChordFingerings
 {
 private:
 	uint64_t notes;
-	vector<Fingering*> fingerings;
+	std::vector<Fingering*> fingerings;
 
 	friend class GTabNode;
 	friend class GTab; // Allows GTab to access private variables
 
 public:
 	ChordFingerings();
-	ChordFingerings(uint64_t, vector<Fingering*>&);
+	ChordFingerings(uint64_t, std::vector<Fingering*>&);
 
 	Fingering getFingering(char);
 
-	vector<Fingering*>& getFingerings();
+	std::vector<Fingering*>& getFingerings();
 
 	bool isMatching(uint64_t);
 };
@@ -68,15 +66,15 @@ private:
 
 	unsigned char tuning[6];
 
-	vector<ChordFingerings> possibleFingerings[6];
+	std::vector<ChordFingerings> possibleFingerings[6];
 
-	list<vector<GTabNode*>> fingeringGraph;
+	std::list<std::vector<GTabNode*>> fingeringGraph;
 
 	int searchForChord(int, uint64_t);
 
 	ChordFingerings& getPossibleFingerings(ChordEvent*);
-	void searchFingerings(vector<vector<char>>&, char, Fingering&, vector<Fingering*>&);
-	void searchAllFingerings(vector<vector<char>>&, char, Fingering&, vector<Fingering*>&);
+	void searchFingerings(std::vector<std::vector<char>>&, char, Fingering&, std::vector<Fingering*>&);
+	void searchAllFingerings(std::vector<std::vector<char>>&, char, Fingering&, std::vector<Fingering*>&);
 
 	int getIntraFitness(Fingering&);
 	int getInterFitness(GTabNode*, GTabNode*);
@@ -87,8 +85,8 @@ public:
 	GTab(unsigned char*);
 	~GTab();
 	
-	void setFrets(vector<ChordEvent*>&);
-	void setFrets(vector<ChordEvent*>&, int);
+	void setFrets(std::vector<ChordEvent*>&);
+	void setFrets(std::vector<ChordEvent*>&, int);
 };
 
 #endif
