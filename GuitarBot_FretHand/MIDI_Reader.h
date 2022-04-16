@@ -5,8 +5,6 @@
 #include <vector>
 #include <fstream>
 
-using namespace std;
-
 class MTrk_Event
 {
 private:
@@ -14,20 +12,20 @@ private:
 	friend class Track_Chunk;
 
 	int delta_time;
-	vector<unsigned char> data;
+	std::vector<unsigned char> data;
 
-	bool read(ifstream&, unsigned char&);
+	bool read(std::ifstream&, unsigned char&);
 
 	// Helper function to read a variable-length quantity from an input file and returns it as an int.
-	int readVLQ(ifstream&);
+	int readVLQ(std::ifstream&);
 
 public:
 
 	int getDeltaTime() const;
 	unsigned char getData(int) const;
-	vector<unsigned char> getData() const;
+	std::vector<unsigned char> getData() const;
 
-	string toString() const;
+	std::string toString() const;
 
 };
 
@@ -38,18 +36,18 @@ private:
 	friend class MIDI_Reader;
 
 	int length;
-	vector<MTrk_Event> events;
+	std::vector<MTrk_Event> events;
 
-	void read(ifstream&);
+	void read(std::ifstream&);
 
 public:
 
 	int getLength() const;
 	int getNumEvents() const;
 	MTrk_Event getEvent(int) const;
-	vector<MTrk_Event> getEvents() const;
+	std::vector<MTrk_Event> getEvents() const;
 
-	string toString() const;
+	std::string toString() const;
 
 };
 
@@ -57,7 +55,7 @@ class MIDI_Reader
 {
 private:
 
-	string filename;
+	std::string filename;
 	bool errorflag;
 
 	unsigned char format;
@@ -67,19 +65,19 @@ private:
 	unsigned short int divTick;
 	char nSMPTEFormat;
 
-	vector<Track_Chunk> tracks;
+	std::vector<Track_Chunk> tracks;
 
 public:
 
 	MIDI_Reader();
-	MIDI_Reader(const string);
+	MIDI_Reader(const std::string);
 
-	void read(const string);
+	void read(const std::string);
 	void read();
 
 	bool good() const;
 
-	string getFilename() const;
+	std::string getFilename() const;
 	char getformat() const;
 	short int getNumTracks() const;
 	short int getDivision() const;
@@ -88,10 +86,10 @@ public:
 	short int getNSMPTEFormat() const;
 
 	Track_Chunk getTrack(int) const;
-	vector<Track_Chunk> getTracks() const;
+	std::vector<Track_Chunk> getTracks() const;
 
-	string toString() const;
-	string headerToString() const;
+	std::string toString() const;
+	std::string headerToString() const;
 };
 
 #endif
