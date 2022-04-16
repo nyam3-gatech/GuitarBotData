@@ -18,9 +18,9 @@ private:
 
 	// Track Data
 
-	vector<GuitarEvent*> g_track;
-	vector<ChordEvent*> chordEvents;
-	vector<TempoEvent*> tempoChanges;
+	std::vector<GuitarEvent*> g_track;
+	std::vector<ChordEvent*> chordEvents;
+	std::vector<TempoEvent*> tempoChanges;
 
 	// GTab - Used to calculate strings and frets to use
 
@@ -65,7 +65,7 @@ public:
 
 	void processMIDI(MIDI_Reader&);
 
-	vector<ChordEvent*>& getChords();
+	std::vector<ChordEvent*>& getChords();
 	const GuitarEvent* getEvent(int);
 	long long getEventTime(int);
 	long long tick_to_us(int);
@@ -76,7 +76,7 @@ public:
 
 	char getState();
 
-	string toString();
+	std::string toString();
 };
 
 #endif

@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 GuitarTrack::GuitarTrack(MIDI_Reader& m)
 {
 	tuning[0] = 40; // E
@@ -42,7 +44,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 	divTick = m_reader.getDivTick();
 	nSMPTEFormat = m_reader.getNSMPTEFormat();
 
-	vector<GuitarEvent*> tempNotes; // holds NoteEvents without a play_time
+	vector<NoteEvent*> tempNotes; // holds NoteEvents without a play_time
 	vector<GuitarEvent*> tempTrack;
 
 	int minimumDuration = 0x7FFFFFFF;
@@ -76,8 +78,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			{
 				if (m_event.getData(index + 1))
 				{
-					GuitarEvent* ptr = new NoteEvent(tick, status & 0x0F, m_event.getData(index), m_event.getData(index + 1));
-					tempNotes.push_back(ptr);
+					tempNotes.push_back(new NoteEvent(tick, status & 0x0F, m_event.getData(index), m_event.getData(index + 1)));
 					continue;
 				}
 				zero_velocity = 1;
@@ -86,7 +87,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 			{
 				for (unsigned int i = 0; i < tempNotes.size(); i++)
 				{
-					NoteEvent* n_ptr = (NoteEvent*) tempNotes[i];
+					NoteEvent* n_ptr = tempNotes[i];
 
 					if (n_ptr->getNote() == m_event.getData(index))
 					{
@@ -111,7 +112,7 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 					int microsecondsPerQuarter = (m_event.getData(index + 1) << 16) + (m_event.getData(index + 2) << 8) + m_event.getData(index + 3);
 					TempoEvent* t_ptr = new TempoEvent(tick, microsecondsPerQuarter);
 					cout << "Tempo: " << microsecondsPerQuarter << endl;
-					tempTrack.push_back(new TempoEvent(tick, microsecondsPerQuarter));
+					tempTrack.push_back(t_ptr);
 				}
 			}
 		}
@@ -131,75 +132,31 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 		if (ptr->getType() == NOTE)
 		{
 			NoteEvent* n_ptr = (NoteEvent*) ptr;
-			if (chord_ptr) // check if a chord already exists
-			{
-				if (n_ptr->getTick() < chord_ptr->getTick() + chord_ptr->getDuration()) // check if the starting tick of the note overlaps with the chord's play_time
-				{
-					if (chord_ptr->getNotes().size() >= 6)
-					{
-						/*
-						// Set the strings and frets
-						chord_ptr->setFrets(tuning);
-						chord_ptr->fixDuplicates();
-						*/
-						// If the chord has multiple notes, set the strumming direction based on which beat it is on
-						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
-						{
-                            chord_ptr->setDirection(UP);
-						}
-						else
-						{
-							chord_ptr->setDirection(DOWN);
-						}
-						//chord_ptr->setContactStrings();
 
-						// create a new ChordEvent and add it to the track
-						chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
-						g_track.push_back(chord_ptr);
-						chordEvents.push_back(chord_ptr);
+			// check conditions to make new ChordEvent
+			if (!chord_ptr || (n_ptr->getTick() >= chord_ptr->getTick() + chord_ptr->getDuration()) || chord_ptr->getNotes().size() >= 6)
+			{
+				// if ChordEvent already exists and is strummed, set strum technique
+				if (chord_ptr && chord_ptr->getTechnique() == STRUM) 
+				{
+					if ((chord_ptr->getTick() / updown_beat_tick) % 2)
+					{
+						chord_ptr->setDirection(UP);
 					}
 					else
 					{
-						if (n_ptr->getTick() < chord_ptr->getTick()) chord_ptr->setTick(n_ptr->getTick());
-						chord_ptr->addNote(*n_ptr); // add the note to the chord
-						continue;
+						chord_ptr->setDirection(DOWN);
 					}
 				}
-				else
-				{
-					// Set the strings and frets
-					/*
-					chord_ptr->setFrets(tuning);
-					chord_ptr->fixDuplicates();
-					*/
-					// If the chord has multiple notes, set the strumming direction based on which beat it is on
-					if (chord_ptr->getTechnique() == STRUM)
-					{
-						if ((chord_ptr->getTick() / updown_beat_tick) % 2)
-						{
-
-                            chord_ptr->setDirection(UP);
-						}
-						else
-						{
-							chord_ptr->setDirection(DOWN);
-						}
-						//chord_ptr->setContactStrings();
-					}
-					// create a new ChordEvent and add it to the track
-					chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
-					g_track.push_back(chord_ptr);
-					chordEvents.push_back(chord_ptr);
-				}
-			}
-			else
-			{
 				// create a new ChordEvent and add it to the track
 				chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
 				g_track.push_back(chord_ptr);
 				chordEvents.push_back(chord_ptr);
 			}
-
+			else // else add note to active ChordEvent
+			{
+				chord_ptr->addNote(*n_ptr);
+			}
 			delete ptr;
 		}
 		else if (ptr->getType() == TEMPO)
@@ -218,11 +175,6 @@ void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
 	// Last Chord
 	if (chord_ptr)
 	{
-		/*
-		// Set the strings and frets
-		chord_ptr->setFrets(tuning);
-		chord_ptr->fixDuplicates();
-		*/
 		// If the chord has multiple notes, set the strumming direction based on which beat it is on
 		if (chord_ptr->getTechnique() == STRUM)
 		{

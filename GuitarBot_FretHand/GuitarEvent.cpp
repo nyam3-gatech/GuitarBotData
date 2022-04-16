@@ -1,8 +1,6 @@
 #include "GuitarEvent.h"
 #include <algorithm>
 
-#include <iostream>
-
 using namespace std;
 
 GuitarEvent::GuitarEvent(int tick_, char type_)
@@ -99,11 +97,13 @@ void NoteEvent::setGuitarString(int s)
 {
 	g_string = s;
 }
+// sets the fret directly
 void NoteEvent::setFret(char fret_)
 {
 	fret = fret_;
 }
-void NoteEvent::setFret(unsigned char* tuning)
+// sets the fret using the guitar string and the input guitar tuning
+void NoteEvent::setFret(const unsigned char* tuning)
 {
 	if (g_string > 0 && g_string < 7) fret = note - tuning[g_string - 1];
 }
@@ -290,6 +290,7 @@ uint64_t ChordEvent::notesToLong()
 	return pitches;
 }
 
+/*
 char ChordEvent::condenseStringFret(char g_string, char fret)
 {
 	return (g_string << 5) + fret;
@@ -302,6 +303,7 @@ char ChordEvent::extractFret(unsigned char gStrFret)
 {
 	return gStrFret & 0x1F;
 }
+*/
 
 void ChordEvent::setDirection(char d)
 {

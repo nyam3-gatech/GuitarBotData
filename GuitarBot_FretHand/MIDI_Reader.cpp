@@ -62,9 +62,17 @@ void MIDI_Reader::read()
 
 	unsigned char c; // input buffer for 1 byte of data
 
-	inputFile >> c >> c >> c >> c; // Reads in "MThd" marker for header chunk
+	// Reads in "MThd" marker for header chunk
+	char str[5];
+	inputFile.get(str, 5);
+	if (strcmp(str, "MThd"))
+	{
+		cerr << "MIDI missing header marker." << endl;
+		errorflag = 1;
+		return;
+	}
 
-	inputFile >> c >> c >> c >> c; // Reads in the length for the header chunk -> should always be six
+	inputFile.ignore(4); // Read in the length for the header chunk -> should always be six
 
 	// Reads in the format data
 	inputFile >> c >> c;
@@ -125,7 +133,6 @@ void Track_Chunk::read(ifstream& inputFile)
 
 	// Clear the events vector
 	events.clear();
-
 	
 	// Counter for how many bytes of this track has been read.
 	bool endOfTrack = 0;

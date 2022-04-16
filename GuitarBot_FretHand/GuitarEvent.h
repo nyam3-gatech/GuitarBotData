@@ -38,7 +38,7 @@ public:
 	virtual std::string toString() = 0;
 };
 
-// TempoEvent changes the play_time of a quarter note in microseconds
+// TempoEvent represents tempo as length of a quarter note in microseconds
 class TempoEvent : public GuitarEvent
 {
 private:
@@ -83,9 +83,12 @@ public:
 	void setDuration(int);
 	void setEndTick(int t);
 	void setGuitarString(int);
+	// sets the fret directly
 	void setFret(char);
-	void setFret(unsigned char*);
+	// sets the fret using the guitar string and the given guitar tuning
+	void setFret(const unsigned char*);
 
+	// return all possible frets with the given guitar tuning
 	std::vector<char> getPossibleFrets(unsigned char*);
 
 	std::string toString();
@@ -109,9 +112,9 @@ private:
 	char contact_string;
 	char final_contact_string;
 
-	char condenseStringFret(char, char);
-	char extractString(unsigned char);
-	char extractFret(unsigned char);
+	//char condenseStringFret(char, char);
+	//char extractString(unsigned char);
+	//char extractFret(unsigned char);
 
 public:
 
