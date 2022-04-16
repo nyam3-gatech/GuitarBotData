@@ -26,6 +26,8 @@ private:
 
 	GTab gTab;
 
+	void setChordDirections(int);
+
 	// Track state to prevent running the sane track at the same time
 
 	#define READY 1
@@ -40,7 +42,7 @@ private:
 	unsigned int tempo_us;
 	unsigned int tick;
 	double tick_us;
-
+	
 	void setTempo(float = 120);
 	void setTempoMicroseconds(unsigned int = 500000);
 	void calcTickTime();
