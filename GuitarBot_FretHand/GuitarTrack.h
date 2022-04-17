@@ -26,57 +26,35 @@ private:
 
 	GTab gTab;
 
+	// Sets the directions of strumming/picking for all chords
 	void setChordDirections(int);
-
-	// Track state to prevent running the sane track at the same time
-
-	#define READY 1
-	#define SETUP 2
-	#define RUNNING 3
-	#define STOP 4
-	char state;
 
 	// Tempo variables and functions
 
-	float tempo;
+	double tempo_bpm;
 	unsigned int tempo_us;
-	unsigned int tick;
 	double tick_us;
 	
-	void setTempo(float = 120);
+	void setTempoBPM(float = 120);
 	void setTempoMicroseconds(unsigned int = 500000);
 	void calcTickTime();
 
-	// Private functions to run a track
-
-	void run_track();
-	static void run_track_static(GuitarTrack*);
-
-	// Physical quantities and handling microcontroller pins
-
-	unsigned char tuning[6]; // Tuning of the guitar
-
-	char frets[6]; // Current frets being pressed down
-	char carFret; // Which fret are the servos currently at
+	// Guitar tuning / pitch of open strings
+	unsigned char tuning[6];
 
 public:
 
-	GuitarTrack(MIDI_Reader&);
+	GuitarTrack(const MIDI_Reader*);
 
 	~GuitarTrack();
 
-	void processMIDI(MIDI_Reader&);
+	void readFromMIDI(const MIDI_Reader*);
 
 	std::vector<ChordEvent*>& getChords();
 	const GuitarEvent* getEvent(int);
 	long long getEventTime(int);
-	long long tick_to_us(int);
-    double tick_to_seconds(int);
-
-	void run();
-	void stop();
-
-	char getState();
+	long long ticks_to_us(int);
+    double ticks_to_seconds(int);
 
 	std::string toString();
 };

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-GuitarTrack::GuitarTrack(MIDI_Reader& m)
+GuitarTrack::GuitarTrack(const MIDI_Reader* m)
 {
 	tuning[0] = 40; // E
 	tuning[1] = 45; // A
@@ -20,12 +20,9 @@ GuitarTrack::GuitarTrack(MIDI_Reader& m)
 
 	gTab = GTab(tuning);
 
-	processMIDI(m);
+	readFromMIDI(m);
 
-	setTempo(120);
-	calcTickTime();
-
-	state = READY;
+	setTempoBPM(120);
 }
 
 GuitarTrack::~GuitarTrack()
@@ -37,19 +34,19 @@ GuitarTrack::~GuitarTrack()
 }
 
 // Process MIDI data into playable chord events stored in the guitar track.
-void GuitarTrack::processMIDI(MIDI_Reader& m_reader)
+void GuitarTrack::readFromMIDI(const MIDI_Reader* m_reader)
 {
-	division = m_reader.getDivision();
-	divType = m_reader.getDivType();
-	divTick = m_reader.getDivTick();
-	nSMPTEFormat = m_reader.getNSMPTEFormat();
+	division = m_reader->getDivision();
+	divType = m_reader->getDivType();
+	divTick = m_reader->getDivTick();
+	nSMPTEFormat = m_reader->getNSMPTEFormat();
 
 	vector<NoteEvent*> tempNotes; // holds NoteEvents without a play_time
 	vector<GuitarEvent*> tempTrack;
 
 	int minimumDuration = 0x7FFFFFFF;
 
-	for (Track_Chunk m_track : m_reader.getTracks())
+	for (Track_Chunk m_track : m_reader->getTracks())
 	{
 		int tick = 0;
 		unsigned char rs = 0;
@@ -213,16 +210,18 @@ void GuitarTrack::setChordDirections(int updown_beat_tick)
 
 // Set functions for tempo
 
-void GuitarTrack::setTempo(float t)
+void GuitarTrack::setTempoBPM(float t)
 {
-	tempo = t;
+	tempo_bpm = t;
 	tempo_us = 60000000.0 / t;
+	calcTickTime();
 }
 
 void GuitarTrack::setTempoMicroseconds(unsigned int t_us)
 {
-	tempo = 60000000.0 / t_us;
+	tempo_bpm = 60000000.0 / t_us;
 	tempo_us = t_us;
+	calcTickTime();
 }
 
 // Calculates how long each tick is in microseconds
@@ -252,141 +251,14 @@ long long GuitarTrack::getEventTime(int index)
 	return 0; // PLACEHOLDER
 }
 
-long long GuitarTrack::tick_to_us(int tick)
+long long GuitarTrack::ticks_to_us(int ticks)
 {
-	return 0; // PLACEHOLDER
+	return ticks * tick_us;
 }
 
-double GuitarTrack::tick_to_seconds(int tick)
+double GuitarTrack::ticks_to_seconds(int ticks)
 {
-    return 60.0 * tick / (tempo * divTick);
-}
-
-// Runs a guitar track
-
-void GuitarTrack::run_track()
-{
-	vector<NoteEvent*> noteBuffer;
-	vector<GuitarEvent*>::iterator eventIterator = g_track.begin();
-	GuitarEvent* event = *eventIterator;
-
-	if (state == SETUP) state = RUNNING;
-
-	while (RUNNING)
-	{
-		if (event != nullptr && tick >= event->getTick())
-		{
-			switch (event->getType())
-			{
-			case CHORD:
-			{
-				ChordEvent* chordPtr = (ChordEvent*)event;
-				/*
-				if (chordPtr->getLowestFret() < carFret)
-				{
-					arduinoInterface->addOrder(OrderTicket(0, MOVE, carFret - chordPtr->getLowestFret()));
-				}
-				else if (chordPtr->getHighestFret() > carFret + 2)
-				{
-					arduinoInterface->addOrder(OrderTicket(0, MOVE, chordPtr->getHighestFret() - carFret - 2));
-				}
-
-				for (NoteEvent note : chordPtr->getNotes())
-				{
-					unsigned char pin = ((note.getFret() - carFret) * 6) + note.getGuitarString() + 1;
-					arduinoInterface->addOrder(OrderTicket(400, ON, pin));
-					noteBuffer.push_back(&note);
-				}
-				*/
-				break;
-			}
-			case TEMPO:
-			{
-				// Placeholder
-
-				break;
-			}
-			}
-
-			//cout << event->toString();
-
-			eventIterator++;
-			if (eventIterator == g_track.end())
-			{
-				event = nullptr;
-			}
-			else
-			{
-				event = *eventIterator;
-			}
-		}
-
-		for (int i = 0; i < noteBuffer.size();)
-		{
-			NoteEvent note = *(noteBuffer[i]);
-			if (tick >= noteBuffer[i]->getEndTick())
-			{
-				/*
-				unsigned char pin = ((note.getFret() - carFret) * 6) + note.getGuitarString() + 1;
-				arduinoInterface->addOrder(OrderTicket(0, OFF, pin));
-				noteBuffer.erase(noteBuffer.begin() + i);
-				*/
-			}
-			else
-			{
-				i++;
-			}
-		}
-
-		if (event == nullptr && (noteBuffer.size() == 0))
-		{
-			state = STOP;
-		}
-	}
-}
-
-void GuitarTrack::run_track_static(GuitarTrack* track)
-{
-	track->run_track();
-}
-
-void GuitarTrack::run()
-{
-	if (state != READY) return;
-
-	state = SETUP;
-
-	tick = -1;
-
-	thread t(run_track_static, this);
-	t.detach();
-
-	auto start = chrono::high_resolution_clock::now();
-	auto elapsed = chrono::high_resolution_clock::now();
-	long long time_us = chrono::duration_cast<chrono::microseconds>(elapsed - start).count();
-	long time_marker = tick_us;
-
-	while (state == SETUP);
-
-	tick++;
-
-	while (state == RUNNING)
-	{
-		elapsed = chrono::high_resolution_clock::now();
-		time_us = chrono::duration_cast<chrono::microseconds>(elapsed - start).count();
-		while (time_us > time_marker)
-		{
-			tick++;
-			time_marker += tick_us;
-		}
-	}
-
-	state = READY;
-}
-
-void GuitarTrack::stop()
-{
-	if (state != READY) state = STOP;
+    return 60.0 * ticks / (tempo_bpm * divTick);
 }
 
 // Creates a string representation of the track
