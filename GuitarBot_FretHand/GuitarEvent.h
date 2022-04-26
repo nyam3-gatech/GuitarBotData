@@ -102,9 +102,9 @@ private:
 	bool playable;
 	std::vector<NoteEvent> notes;
 
-#define PICK 0
-#define STRUM 1
-#define UP -1
+#define TC_PICK 0
+#define TC_STRUM 1
+#define UP 0
 #define DOWN 1
 
 	char direction;
@@ -142,7 +142,7 @@ public:
 
 	void setDirection(char);
 
-	char getTechnique();
+	char getTechniqueClass();
 	char getDirection();
 
 	char getHighestString();
@@ -153,17 +153,17 @@ public:
 	char getContactString();
 	char getFinalContactString();
 
-#define PD_P 0.5
-#define PD_E 0.5
-#define PU_P 0.5
-#define PU_E 0.5
+#define PD_P 1
+#define PD_E 1
+#define PU_P 1
+#define PU_E 1
 #define SD_P 1
 #define SD_E 1
 #define SU_P 1
 #define SU_E 1
 
-	float getPreparePosition();
-	float getFinalPosition();
+	float getStartPosition();
+	float getEndPosition();
 
 	std::vector<NoteEvent>& getNotes();
 	unsigned int getNumNotes();

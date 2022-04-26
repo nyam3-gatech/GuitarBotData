@@ -1,10 +1,6 @@
 #include "GuitarTrack.h"
 
-#include <chrono>
-#include <mutex>
-#include <thread>
 #include <cmath>
-
 #include <iostream>
 
 using namespace std;
@@ -169,14 +165,14 @@ void GuitarTrack::setChordDirections(int updown_beat_tick)
 	while (i < chordEvents.size())
 	{
 		// Check if the chord is just a single picked note
-		if (current->getTechnique() == PICK)
+		if (current->getTechniqueClass() == PICK)
 		{
 			// Check conditions for when picking direction should be up
-			if (next && (next->getTechnique() == PICK) ?
+			if (next && (next->getTechniqueClass() == PICK) ?
 					next->getNotes()[0].getGuitarString() < current->getNotes()[0].getGuitarString()
 						|| next->getNotes()[0].getGuitarString() == current->getNotes()[0].getGuitarString()
-						&& last && last->getTechnique() == PICK && last->getDirection() == DOWN
-					: last && last->getTechnique() == PICK && last->getDirection() == DOWN
+						&& last && last->getTechniqueClass() == PICK && last->getDirection() == DOWN
+					: last && last->getTechniqueClass() == PICK && last->getDirection() == DOWN
 				)
 			{
 				current->setDirection(UP);
