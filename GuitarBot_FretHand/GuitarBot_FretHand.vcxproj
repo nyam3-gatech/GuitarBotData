@@ -88,12 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\natha\source\repos\GuitarBot_FretHand\GuitarBot_FretHand\include\dynamixel_sdk</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_80_0;C:\Users\natha\source\repos\GuitarBot_FretHand\GuitarBot_FretHand\include\dynamixel_sdk</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>dxl_x64_cpp.lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>EposCmd.dll</AdditionalLibraryDirectories>
+      <AdditionalDependencies>EposCmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,8 +146,9 @@
     <ClCompile Include="GuitarEvent.cpp" />
     <ClCompile Include="GuitarTrack.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MaxonInterface.cpp" />
     <ClCompile Include="MIDI_Reader.cpp" />
-    <ClCompile Include="MotorInterface.cpp" />
+    <ClCompile Include="DynamixelInterface.cpp" />
     <ClCompile Include="src\dynamixel_sdk\group_bulk_read.cpp" />
     <ClCompile Include="src\dynamixel_sdk\group_bulk_write.cpp" />
     <ClCompile Include="src\dynamixel_sdk\group_sync_read.cpp" />
@@ -165,8 +167,9 @@
     <ClInclude Include="GTab.h" />
     <ClInclude Include="GuitarEvent.h" />
     <ClInclude Include="GuitarTrack.h" />
+    <ClInclude Include="MaxonInterface.h" />
     <ClInclude Include="MIDI_Reader.h" />
-    <ClInclude Include="MotorInterface.h" />
+    <ClInclude Include="DynamixelInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

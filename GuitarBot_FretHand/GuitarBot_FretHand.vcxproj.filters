@@ -33,7 +33,7 @@
     <ClCompile Include="GTab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MotorInterface.cpp">
+    <ClCompile Include="DynamixelInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\dynamixel_sdk\group_bulk_read.cpp">
@@ -72,6 +72,9 @@
     <ClCompile Include="src\dynamixel_sdk\protocol2_packet_handler.cpp">
       <Filter>Source Files\dynamixel_sdk</Filter>
     </ClCompile>
+    <ClCompile Include="MaxonInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GuitarEvent.h">
@@ -89,7 +92,10 @@
     <ClInclude Include="GBotFret.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MotorInterface.h">
+    <ClInclude Include="DynamixelInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MaxonInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
