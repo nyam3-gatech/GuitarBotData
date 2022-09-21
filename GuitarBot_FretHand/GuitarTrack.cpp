@@ -165,14 +165,14 @@ void GuitarTrack::setChordDirections(int updown_beat_tick)
 	while (i < chordEvents.size())
 	{
 		// Check if the chord is just a single picked note
-		if (current->getTechniqueClass() == PICK)
+		if (current->getTechniqueClass() == TC_PICK)
 		{
 			// Check conditions for when picking direction should be up
-			if (next && (next->getTechniqueClass() == PICK) ?
+			if (next && (next->getTechniqueClass() == TC_PICK) ?
 					next->getNotes()[0].getGuitarString() < current->getNotes()[0].getGuitarString()
 						|| next->getNotes()[0].getGuitarString() == current->getNotes()[0].getGuitarString()
-						&& last && last->getTechniqueClass() == PICK && last->getDirection() == DOWN
-					: last && last->getTechniqueClass() == PICK && last->getDirection() == DOWN
+						&& last && last->getTechniqueClass() == TC_PICK && last->getDirection() == DOWN
+					: last && last->getTechniqueClass() == TC_PICK && last->getDirection() == DOWN
 				)
 			{
 				current->setDirection(UP);

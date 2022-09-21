@@ -312,8 +312,8 @@ void ChordEvent::setDirection(char d)
 
 char ChordEvent::getTechniqueClass()
 {
-	if (notes.size() == 1) return PICK;
-	return STRUM;
+	if (notes.size() == 1) return TC_PICK;
+	return TC_STRUM;
 }
 char ChordEvent::getDirection()
 {
@@ -363,7 +363,7 @@ char ChordEvent::getFinalContactString()
 }
 float ChordEvent::getStartPosition()
 {
-	if (getTechniqueClass() == PICK)
+	if (getTechniqueClass() == TC_PICK)
 	{
 		return contact_string + ((getDirection() == DOWN) ? -PD_P : PU_P);
 	}
@@ -374,7 +374,7 @@ float ChordEvent::getStartPosition()
 }
 float ChordEvent::getEndPosition()
 {
-	if (getTechniqueClass() == PICK)
+	if (getTechniqueClass() == TC_PICK)
 	{
 		return final_contact_string + ((getDirection() == DOWN) ? PD_E : -PU_E);
 	}
@@ -386,7 +386,7 @@ float ChordEvent::getEndPosition()
 
 string ChordEvent::toString()
 {
-	string str = "chord :: tick = " + to_string(tick) + ", m = " + to_string((tick/1920) + 1) + ", technique = " + (getTechniqueClass() == STRUM ? "strum" : "pick");
+	string str = "chord :: tick = " + to_string(tick) + ", m = " + to_string((tick/1920) + 1) + ", technique = " + (getTechniqueClass() == TC_STRUM ? "strum" : "pick");
 	str += ", direction = " + (string) (direction == UP ? "up" : "down");
 	str += ", cs = " + to_string(contact_string) + ", fcs = " + to_string(final_contact_string) + "\n";
 	if (!playable) str += "   <NOT PLAYABLE - range restriction>\n";
