@@ -1,4 +1,4 @@
-#include "GBotFret.h"
+#include "GuitarTrack.h"
 #include <iostream>
 
 int main()
