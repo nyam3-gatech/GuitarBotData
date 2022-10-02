@@ -77,11 +77,15 @@ public:
 	int getDuration();
 	int getEndTick();
 	int getNote();
+	int getVelocity();
 	char getGuitarString();
 	char getFret();
 
+	void setChannel(int);
 	void setDuration(int);
-	void setEndTick(int t);
+	void setEndTick(int);
+	void setNote(int);
+	void setVelocity(int);
 	void setGuitarString(int);
 	// sets the fret directly
 	void setFret(char);
@@ -141,7 +145,6 @@ public:
 	bool removeNote(int);
 
 	void setDirection(char);
-
 	char getTechniqueClass();
 	char getDirection();
 
@@ -149,7 +152,6 @@ public:
 	char getLowestString();
 
 	void setContactStrings();
-
 	char getContactString();
 	char getFinalContactString();
 

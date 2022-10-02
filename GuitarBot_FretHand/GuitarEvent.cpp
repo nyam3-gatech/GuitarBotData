@@ -76,6 +76,10 @@ int NoteEvent::getNote()
 {
 	return note;
 }
+int NoteEvent::getVelocity()
+{
+	return velocity;
+}
 char NoteEvent::getGuitarString()
 {
 	return g_string;
@@ -85,6 +89,10 @@ char NoteEvent::getFret()
 	return fret;
 }
 
+void NoteEvent::setChannel(int c)
+{
+	channel = c;
+}
 void NoteEvent::setDuration(int d)
 {
 	endTick = tick + d;
@@ -92,6 +100,14 @@ void NoteEvent::setDuration(int d)
 void NoteEvent::setEndTick(int t)
 {
 	endTick = t;
+}
+void NoteEvent::setNote(int n)
+{
+	note = n;
+}
+void NoteEvent::setVelocity(int v)
+{
+	velocity = v;
 }
 void NoteEvent::setGuitarString(int s)
 {
