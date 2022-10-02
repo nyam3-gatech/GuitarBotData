@@ -20,8 +20,6 @@ std::string module_test()
 
 #endif
 
-#include <iostream>
-
 std::array<std::array<int, 6>, 2> genPlayCommand(ChordEvent& chord)
 {
     std::array<std::array<int, 6>, 2> pCommand = {0};
