@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\dynamixel_sdk">
-      <UniqueIdentifier>{25b69e37-f292-447a-91bf-7a525edfd864}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GuitarEvent.cpp">
@@ -33,46 +30,7 @@
     <ClCompile Include="GTab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DynamixelInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\group_bulk_read.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\group_bulk_write.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\group_sync_read.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\group_sync_write.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\packet_handler.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\port_handler.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\port_handler_arduino.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\port_handler_linux.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\port_handler_mac.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\port_handler_windows.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\protocol1_packet_handler.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamixel_sdk\protocol2_packet_handler.cpp">
-      <Filter>Source Files\dynamixel_sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="MaxonInterface.cpp">
+    <ClCompile Include="GTrackPy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,14 +47,11 @@
     <ClInclude Include="GTab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GBotFret.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DynamixelInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MaxonInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="setup.py" />
+    <None Include="pyproject.toml">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

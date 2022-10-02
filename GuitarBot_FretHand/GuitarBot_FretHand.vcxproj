@@ -24,6 +24,7 @@
     <ProjectGuid>{4bbe1e39-a5d6-4113-bf27-4fcc0156d964}</ProjectGuid>
     <RootNamespace>GuitarBotFretHand</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GBotData</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -40,7 +41,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -72,12 +73,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>$GBotData</TargetName>
+    <TargetExt>.pyd</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>GBotData</TargetName>
+    <TargetExt>.pyd</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -86,15 +91,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_80_0;C:\Users\natha\source\repos\GuitarBot_FretHand\GuitarBot_FretHand\include\dynamixel_sdk</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\Include;C:\Users\natha\source\repos\GuitarBot_FretHand\extern\pybind11\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>EposCmd.dll</AdditionalLibraryDirectories>
-      <AdditionalDependencies>EposCmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\libs</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,12 +123,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Microsoft Visual Studio\Shared\Python39_64\include;C:\Users\natha\source\repos\GuitarBot_FretHand\extern\pybind11\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft Visual Studio\Shared\Python39_64\libs</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,33 +152,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GTab.cpp" />
+    <ClCompile Include="GTrackPy.cpp" />
     <ClCompile Include="GuitarEvent.cpp" />
     <ClCompile Include="GuitarTrack.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MaxonInterface.cpp" />
     <ClCompile Include="MIDI_Reader.cpp" />
-    <ClCompile Include="DynamixelInterface.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\group_bulk_read.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\group_bulk_write.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\group_sync_read.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\group_sync_write.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\packet_handler.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\port_handler.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\port_handler_arduino.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\port_handler_linux.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\port_handler_mac.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\port_handler_windows.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\protocol1_packet_handler.cpp" />
-    <ClCompile Include="src\dynamixel_sdk\protocol2_packet_handler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GBotFret.h" />
     <ClInclude Include="GTab.h" />
     <ClInclude Include="GuitarEvent.h" />
     <ClInclude Include="GuitarTrack.h" />
-    <ClInclude Include="MaxonInterface.h" />
     <ClInclude Include="MIDI_Reader.h" />
-    <ClInclude Include="DynamixelInterface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pyproject.toml" />
+    <None Include="setup.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
