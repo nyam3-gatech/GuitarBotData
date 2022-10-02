@@ -5,6 +5,8 @@
 
 using namespace std;
 
+GuitarTrack::GuitarTrack(string midi_file) : GuitarTrack(MIDI_Reader(midi_file)) {}
+GuitarTrack::GuitarTrack(const MIDI_Reader& m) : GuitarTrack(&m) {}
 GuitarTrack::GuitarTrack(const MIDI_Reader* m)
 {
 	tuning[0] = 40; // E
@@ -104,7 +106,6 @@ void GuitarTrack::readFromMIDI(const MIDI_Reader* m_reader)
 				{
 					int microsecondsPerQuarter = (m_event.getData(index + 1) << 16) + (m_event.getData(index + 2) << 8) + m_event.getData(index + 3);
 					TempoEvent* t_ptr = new TempoEvent(tick, microsecondsPerQuarter);
-					cout << "Tempo: " << microsecondsPerQuarter << endl;
 					tempTrack.push_back(t_ptr);
 				}
 			}
@@ -162,7 +163,7 @@ void GuitarTrack::setChordDirections(int updown_beat_tick)
 	ChordEvent* next = (chordEvents.size() > 1) ? chordEvents[1] : 0;
 
 	int i = 0;
-	while (i < chordEvents.size())
+	while (i < chordEvents.size() && current)
 	{
 		// Check if the chord is just a single picked note
 		if (current->getTechniqueClass() == TC_PICK)
@@ -229,6 +230,11 @@ void GuitarTrack::calcTickTime()
 vector<ChordEvent*>& GuitarTrack::getChords()
 {
 	return chordEvents;
+}
+
+ChordEvent& GuitarTrack::getChord(int index)
+{
+	return *chordEvents[index];
 }
 
 // Returns pointer to a GuitarEvent

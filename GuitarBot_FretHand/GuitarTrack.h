@@ -44,6 +44,8 @@ private:
 
 public:
 
+	GuitarTrack(std::string);
+	GuitarTrack(const MIDI_Reader&);
 	GuitarTrack(const MIDI_Reader*);
 
 	~GuitarTrack();
@@ -51,6 +53,7 @@ public:
 	void readFromMIDI(const MIDI_Reader*);
 
 	std::vector<ChordEvent*>& getChords();
+	ChordEvent& getChord(int);
 	const GuitarEvent* getEvent(int);
 	long long getEventTime(int);
 	long long ticks_to_us(int);
