@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GuitarBot_FretHand", "GuitarBot_FretHand\GuitarBot_FretHand.vcxproj", "{4BBE1E39-A5D6-4113-BF27-4FCC0156D964}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GBotData", "GuitarBotData\GuitarBotData.vcxproj", "{4BBE1E39-A5D6-4113-BF27-4FCC0156D964}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GBotPython", "GBotPython\GBotPython.pyproj", "{A86753B0-EE0F-47D3-81ED-67B6917D1074}"
 EndProject
