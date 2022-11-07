@@ -85,8 +85,8 @@ public:
 	GTab(unsigned char*);
 	~GTab();
 	
-	void setFrets(std::vector<ChordEvent*>&);
-	void setFrets(std::vector<ChordEvent*>&, int);
+	void setFrets(std::vector<ChordEvent>&);
+	void setFrets(std::vector<ChordEvent>&, int);
 };
 
 #endif

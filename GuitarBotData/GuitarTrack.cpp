@@ -23,14 +23,6 @@ GuitarTrack::GuitarTrack(const MIDI_Reader* m)
 	setTempoBPM(120);
 }
 
-GuitarTrack::~GuitarTrack()
-{
-	for (GuitarEvent* ptr : g_track)
-	{
-		delete ptr;
-	}
-}
-
 // Process MIDI data into playable chord events stored in the guitar track.
 void GuitarTrack::readFromMIDI(const MIDI_Reader* m_reader)
 {
@@ -129,25 +121,21 @@ void GuitarTrack::readFromMIDI(const MIDI_Reader* m_reader)
 			if (!chord_ptr || (n_ptr->getTick() >= chord_ptr->getTick() + chord_ptr->getDuration()) || chord_ptr->getNotes().size() >= 6)
 			{
 				// create a new ChordEvent and add it to the track
-				chord_ptr = new ChordEvent(n_ptr->getTick(), *n_ptr);
+				chordEvents.push_back(ChordEvent(n_ptr->getTick(), *n_ptr));
+				chord_ptr = &chordEvents.back();
 				g_track.push_back(chord_ptr);
-				chordEvents.push_back(chord_ptr);
 			}
 			else // else add note to active ChordEvent
 			{
 				chord_ptr->addNote(*n_ptr);
 			}
-			delete ptr;
 		}
 		else if (ptr->getType() == TEMPO)
 		{
+			tempoChanges.push_back(TempoEvent(*(TempoEvent*) ptr));
 			g_track.push_back(ptr);
-			tempoChanges.push_back((TempoEvent*) ptr);
 		}
-		else
-		{
-			delete ptr;
-		}
+		delete ptr;
 	}
 
 	gTab.setFrets(chordEvents);
@@ -159,8 +147,8 @@ void GuitarTrack::readFromMIDI(const MIDI_Reader* m_reader)
 void GuitarTrack::setChordDirections(int updown_beat_tick)
 {
 	ChordEvent* last = 0;
-	ChordEvent* current = chordEvents[0];
-	ChordEvent* next = (chordEvents.size() > 1) ? chordEvents[1] : 0;
+	ChordEvent* current = &chordEvents[0];
+	ChordEvent* next = (chordEvents.size() > 1) ? &chordEvents[1] : 0;
 
 	int i = 0;
 	while (i < chordEvents.size() && current)
@@ -201,7 +189,7 @@ void GuitarTrack::setChordDirections(int updown_beat_tick)
 
 		last = current;
 		current = next;
-		next = (i < chordEvents.size()) ? chordEvents[i] : 0;
+		next = (i < chordEvents.size()) ? &chordEvents[i] : 0;
 	}
 }
 
@@ -227,14 +215,14 @@ void GuitarTrack::calcTickTime()
 	tick_us = tempo_us / divTick;
 }
 
-vector<ChordEvent*>& GuitarTrack::getChords()
+vector<ChordEvent>& GuitarTrack::getChords()
 {
 	return chordEvents;
 }
 
 ChordEvent& GuitarTrack::getChord(int index)
 {
-	return *chordEvents[index];
+	return chordEvents[index];
 }
 
 // Returns pointer to a GuitarEvent

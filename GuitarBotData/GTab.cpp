@@ -364,13 +364,13 @@ int GTab::getInterFitness(GTabNode* node1, GTabNode* node2)
 	return fitness;
 }
 
-void GTab::setFrets(vector<ChordEvent*>& chords)
+void GTab::setFrets(vector<ChordEvent>& chords)
 {
 	bool first = fingeringGraph.size() == 0 ? 1 : 0;
 
 	for (int i = 0; i < chords.size(); i++)
 	{
-		ChordEvent* chord = chords[i];
+		ChordEvent* chord = &chords[i];
 
 		vector<Fingering*>& fingerings = getPossibleFingerings(chord).getFingerings();
 
@@ -437,7 +437,7 @@ void GTab::setFrets(vector<ChordEvent*>& chords)
 	}
 }
 
-void GTab::setFrets(vector<ChordEvent*>& chords, int index)
+void GTab::setFrets(vector<ChordEvent>& chords, int index)
 {
 	bool empty = fingeringGraph.size() == 0 ? 1 : 0;
 
@@ -454,7 +454,7 @@ void GTab::setFrets(vector<ChordEvent*>& chords, int index)
 	
 	for (int i = index; i < chords.size(); i++)
 	{
-		ChordEvent* chord = chords[i];
+		ChordEvent* chord = &chords[i];
 
 		vector<Fingering*>& fingerings = getPossibleFingerings(chord).getFingerings();
 
