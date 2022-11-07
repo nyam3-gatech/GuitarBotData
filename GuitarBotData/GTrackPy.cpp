@@ -181,5 +181,5 @@ RHCommand genRHPlayCommand(GuitarTrack& track, unsigned int index)
 }
 RHCommand genRHPlayCommand(ChordEvent& chord)
 {
-    return RHCommand(false, getFirstPos(chord), getLastPos(chord), getChordVelocity(chord));
+    return RHCommand(true, getFirstPos(chord), getLastPos(chord), getChordVelocity(chord));
 }
