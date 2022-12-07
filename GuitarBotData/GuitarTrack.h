@@ -9,55 +9,57 @@ class GuitarTrack
 {
 private:
 
-	// MIDI Data
+    // MIDI Data
 
-	unsigned short int division;
-	unsigned char divType;
-	unsigned short int divTick;
-	char nSMPTEFormat;
+    unsigned short int division;
+    unsigned char divType;
+    unsigned short int divTick;
+    char nSMPTEFormat;
 
-	// Track Data
+    // Track Data
 
-	std::vector<GuitarEvent*> g_track;
-	std::vector<ChordEvent> chordEvents;
-	std::vector<TempoEvent> tempoChanges;
+    std::vector<GuitarEvent*> g_track;
+    std::vector<ChordEvent> chordEvents;
+    std::vector<TempoEvent> tempoChanges;
 
-	// GTab - Used to calculate strings and frets to use
+    // GTab - Used to calculate strings and frets to use
 
-	GTab gTab;
+    GTab gTab;
 
-	// Sets the directions of strumming/picking for all chords
-	void setChordDirections(int);
+    // Sets the directions of strumming/picking for all chords
+    void setChordDirections(int);
 
-	// Tempo variables and functions
+    // Tempo variables and functions
 
-	double tempo_bpm;
-	unsigned int tempo_us;
-	double tick_us;
-	
-	void setTempoBPM(float = 120);
-	void setTempoMicroseconds(unsigned int = 500000);
-	void calcTickTime();
+    double tempo_bpm;
+    unsigned int tempo_us;
+    double tick_us;
 
-	// Guitar tuning / pitch of open strings
-	unsigned char tuning[6];
+    void setTempoBPM(float = 120);
+    void setTempoMicroseconds(unsigned int = 500000);
+    void calcTickTime();
+
+    // Guitar tuning / pitch of open strings
+    unsigned char tuning[6];
 
 public:
 
-	GuitarTrack(std::string);
-	GuitarTrack(const MIDI_Reader&);
-	GuitarTrack(const MIDI_Reader*);
+    GuitarTrack(std::string);
+    GuitarTrack(const MIDI_Reader&);
+    GuitarTrack(const MIDI_Reader*);
 
-	void readFromMIDI(const MIDI_Reader*);
+    void readFromMIDI(const MIDI_Reader*);
 
-	std::vector<ChordEvent>& getChords();
-	ChordEvent& getChord(int);
-	const GuitarEvent* getEvent(int);
-	long long getEventTime(int);
-	long long ticks_to_us(int);
+    std::vector<ChordEvent>& getChords();
+    ChordEvent& getChord(int);
+    size_t getNumChords();
+    const GuitarEvent* getEvent(int);
+    long long getEventTime(int);
+    long long ticks_to_us(int);
     double ticks_to_seconds(int);
+    double getTrackLength();
 
-	std::string toString();
+    std::string toString();
 };
 
 #endif

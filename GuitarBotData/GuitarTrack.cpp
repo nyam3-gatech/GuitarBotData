@@ -225,6 +225,11 @@ ChordEvent& GuitarTrack::getChord(int index)
 	return chordEvents[index];
 }
 
+size_t GuitarTrack::getNumChords()
+{
+	return chordEvents.size();
+}
+
 // Returns pointer to a GuitarEvent
 const GuitarEvent* GuitarTrack::getEvent(int index)
 {
@@ -249,6 +254,12 @@ long long GuitarTrack::ticks_to_us(int ticks)
 double GuitarTrack::ticks_to_seconds(int ticks)
 {
     return 60.0 * ticks / (tempo_bpm * divTick);
+}
+
+double GuitarTrack::getTrackLength()
+{
+	ChordEvent& chord = getChord(getNumChords() - 1);
+	return ticks_to_seconds(chord.getTick() + chord.getDuration() + 1);
 }
 
 // Creates a string representation of the track
