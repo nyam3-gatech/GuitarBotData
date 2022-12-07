@@ -8,13 +8,14 @@ gCmdArray = gbd.genGuitarCmdArray(gTrack)
 
 numCmds = len(gCmdArray)
 cmdIndex = 0
-time_stamp = -1.0
-t_init = time.time()
+setup_time = 1
+time_stamp = -setup_time
+t_init = time.time() + setup_time
 songLength = gTrack.getTrackLength() + 1
 endOfSong = t_init + songLength
 while (cmdIndex < numCmds) and (time_stamp < songLength):
     gCmd = gCmdArray[cmdIndex]
-    time_stamp = time.time() - t_init - 1
+    time_stamp = time.time() - t_init
     if (time_stamp) >= gCmd.time:
         print("t = " + str(time_stamp))
         print("  is_sound = " + str(gCmd.is_sound));
