@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="GTab.cpp" />
     <ClCompile Include="GTrackPy.cpp" />
+    <ClCompile Include="GuitarCmd.cpp" />
     <ClCompile Include="GuitarEvent.cpp" />
     <ClCompile Include="GuitarTrack.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GTab.h" />
+    <ClInclude Include="GuitarCmd.h" />
     <ClInclude Include="GuitarEvent.h" />
     <ClInclude Include="GuitarTrack.h" />
     <ClInclude Include="MIDI_Reader.h" />
