@@ -14,24 +14,6 @@ std::string module_test()
     return "GBotData Module Loaded!";
 }
 
-#ifndef PCOMMAND
-#define PCOMMAND
-#define PC_DEFAULT_FRET 2
-#define PC_IDLE 0
-#define PC_OPEN 1
-#define PC_PRESS 2
-#define PC_DAMP 3
-#define PC_HAMMERON 4
-#define PC_SLIDE 5
-#endif
-
-#ifndef RH_PARAM
-#define RH_PARAM
-#define RH_UP 1
-#define RH_DOWN -1
-#define RH_PREP_TIME 0.15
-#endif
-
 PYBIND11_MODULE(GBotData, m)
 {
     m.doc() = "Test";
@@ -94,5 +76,4 @@ PYBIND11_MODULE(GBotData, m)
 #else
     m.attr("__version__") = "dev";
 #endif
-
 }
