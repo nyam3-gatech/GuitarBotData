@@ -75,11 +75,7 @@ inline void GuitarCmd::setLHCmd(ChordEvent& chord)
 inline void GuitarCmd::setRHCmd(GuitarTrack& track, size_t index, bool is_sound)
 {
     ChordEvent& chord = track.getChord(index);
-    if (is_sound)
-    {
-        if (index == 0) setRHCmd(false, 0, getFirstPos(chord));
-        else setRHCmd(false, getLastPos(chord), getFirstPos(track.getChord(index + 1)));
-    }
+    if (!is_sound) setRHCmd(false, index == 0 ? 0 : getLastPos(track.getChord(index-1)), getFirstPos(chord));
     else setRHCmd(true, getFirstPos(chord), getLastPos(chord), getChordVelocity(chord), getRHDirection(chord));
 }
 inline void GuitarCmd::setRHCmd(bool sound, int posi, int posf, int vel, int dir)
@@ -124,9 +120,10 @@ bool inline GuitarCmd::checkCircular(GuitarCmd& gCmd)
 
 vector<GuitarCmd> genGuitarCmdArray(GuitarTrack& track)
 {
+    const size_t N = track.getNumChords();
     vector<GuitarCmd> gCmdArray;
-    size_t N = track.getNumChords();
-    GuitarCmd* prevCmd = 0; 
+    gCmdArray.reserve(2*N);
+    GuitarCmd* prevCmd = 0;
     for (size_t i = 0; i < N; i++)
     {
         gCmdArray.push_back(GuitarCmd(track, i, false, prevCmd));

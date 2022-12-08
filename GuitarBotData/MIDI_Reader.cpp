@@ -2,6 +2,7 @@
 #include <iostream>
 #include <exception>
 #include <sstream>
+#include <cstring>
 
 using namespace std;
 
